@@ -1,9 +1,6 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from 'router';
 
 export default function App() {
-  return (
-    <ChakraProvider>
-      <h1>Hello World!</h1>
-    </ChakraProvider>
-  );
+  return <RouterProvider router={router} />;
 }
