@@ -19,14 +19,7 @@
     "import/order": [
       "error",
       {
-        "groups": [
-          "external",
-          "builtin",
-          "internal",
-          "parent",
-          "sibling",
-          "index"
-        ]
+        "groups": ["external", "builtin", "internal", "parent", "sibling", "index"]
       }
     ],
     "no-multi-spaces": "error",
