@@ -16,7 +16,7 @@ export default function Header() {
         </Box>
         <Spacer />
         <HStack spacing={7}>
-          <Button>Create Quiz</Button>
+          <Button colorScheme="yellow">Create Quiz</Button>
           <Link to={ROUTES.SIGN_UP} title="Register new account">
             <StyledText>Sign Up</StyledText>
           </Link>
