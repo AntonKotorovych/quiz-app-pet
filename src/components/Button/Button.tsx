@@ -1,5 +1,5 @@
-import { Button as ChakraButton } from '@chakra-ui/react';
+import { ButtonProps, Button as ChakraButton } from '@chakra-ui/react';
 
-export default function Button() {
-  return <ChakraButton colorScheme="yellow">Create Quiz</ChakraButton>;
+export default function Button({ children }: ButtonProps) {
+  return <ChakraButton colorScheme="yellow">{children}</ChakraButton>;
 }

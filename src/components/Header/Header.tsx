@@ -1,9 +1,9 @@
-import MainLogoSVG from 'components/MainLogo/MainLogoSVG';
-import { HeaderContainer, NavBar, StyledText } from './styles';
 import { Box, HStack, Spacer } from '@chakra-ui/react';
-import { ROUTES } from 'constants/routes';
 import { Link } from 'react-router-dom';
+import { ROUTES } from 'constants/routes';
+import MainLogoSVG from 'components/MainLogo/MainLogoSVG';
 import Button from 'components/Button';
+import { HeaderContainer, NavBar, StyledText } from './styles';
 
 export default function Header() {
   return (
@@ -16,7 +16,7 @@ export default function Header() {
         </Box>
         <Spacer />
         <HStack spacing={7}>
-          <Button />
+          <Button>Create Quiz</Button>
           <Link to={ROUTES.SIGN_UP} title="Register new account">
             <StyledText>Sign Up</StyledText>
           </Link>
