@@ -1,16 +1,15 @@
-import { Box, HStack, Spacer } from '@chakra-ui/react';
+import { Box, Button, HStack, Spacer } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import MainLogoSVG from 'components/MainLogo/MainLogoSVG';
-import Button from 'components/Button';
 import { HeaderContainer, NavBar, StyledText } from './styles';
 
 export default function Header() {
   return (
     <HeaderContainer as="header">
       <NavBar>
-        <Box w="4rem">
-          <Link to={ROUTES.HOME} title="Go to Home Page">
+        <Box>
+          <Link to={ROUTES.HOME} title="Go to Home Page" style={{ padding: '4rem' }}>
             <MainLogoSVG />
           </Link>
         </Box>
