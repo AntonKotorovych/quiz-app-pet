@@ -4,7 +4,7 @@ import Header from 'components/Header';
 
 export default function Layout() {
   return (
-    <Container justifyContent="center" maxW="85%" m="auto">
+    <Container centerContent maxW="85%" m="auto">
       <Header />
       <Outlet />
     </Container>
