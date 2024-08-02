@@ -1,6 +1,6 @@
 import {
   FormControl,
-  // FormErrorMessage,
+  FormErrorMessage,
   FormLabel,
   Input,
   InputProps,
@@ -13,7 +13,7 @@ interface Props extends InputProps {
   name: AUTH_INPUT_NAMES;
 }
 
-export default function FormInput({
+export default function FormElement({
   type,
   label,
   placeholder,
@@ -26,18 +26,26 @@ export default function FormInput({
       `set${name.charAt(0).toUpperCase() + name.slice(1)}` as keyof FormActions;
     return state[setterMethod];
   });
+  const error = useFormStore(state => state[`${name}Error`]);
+  // const setError = useFormStore(
+  //   state =>
+  //     state[
+  //       `set${name.charAt(0).toUpperCase() + name.slice(1)}Error` as keyof FormActions
+  //     ]
+  // );
 
   return (
-    <FormControl>
+    <FormControl isInvalid={!!error}>
       <FormLabel>{label}</FormLabel>
       <Input
         type={type}
         placeholder={placeholder}
         isRequired={isRequired}
         value={value}
+        name={name}
         onChange={event => setValue(event.target.value)}
       />
-      {/* <FormErrorMessage>{validationErrorMessage}</FormErrorMessage> */}
+      <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
   );
 }

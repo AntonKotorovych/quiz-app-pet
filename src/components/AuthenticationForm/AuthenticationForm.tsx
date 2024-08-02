@@ -1,49 +1,98 @@
+import { FormEvent } from 'react';
 import { Button, Flex, Text, VStack } from '@chakra-ui/react';
 import { Form, Link } from 'react-router-dom';
 import { AUTH_INPUT_NAMES, AUTH_TYPE } from 'constants/enums';
+import { useFormStore } from 'hooks/useFormStore';
 import { ROUTES } from 'constants/routes';
-import FormInput from './FormInput';
+import FormElement from './FormElement';
 
 interface Props {
   formType: string;
 }
 
 export default function AuthenticationForm({ formType }: Props) {
+  const getEmail = useFormStore(state => state.getEmail);
+  const getPassword = useFormStore(state => state.getPassword);
+  const getConfirmPassword = useFormStore(state => state.getConfirmPassword);
+
+  const setEmailError = useFormStore(state => state.setEmailError);
+  const setPasswordError = useFormStore(state => state.setPasswordError);
+  const setConfirmPasswordError = useFormStore(
+    state => state.setConfirmPasswordError
+  );
+  const clearErrors = useFormStore(state => state.clearErrors);
+
+  const resetFormState = useFormStore(state => state.resetFormState);
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    clearErrors();
+
+    if (formType === AUTH_TYPE.SIGN_UP) {
+      let isValid = true;
+
+      const email = getEmail();
+      const password = getPassword();
+      const confirmPassword = getConfirmPassword();
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const hasNumber = /\d/;
+
+      if (!emailPattern.test(email)) {
+        setEmailError('Invalid email address');
+        isValid = false;
+      }
+
+      if (password.length < 8 || password.length > 25) {
+        setPasswordError('Password must be between 7 and 25 characters.');
+        isValid = false;
+      } else if (!hasNumber.test(password)) {
+        setPasswordError('Password must contain at least one number.');
+        isValid = false;
+      }
+
+      if (password !== confirmPassword) {
+        setPasswordError('Passwords do not match.');
+        setConfirmPasswordError('Passwords do not match.');
+        isValid = false;
+      }
+
+      if (isValid) console.log('Form is Valid!');
+    }
+  };
+
   return (
-    <Form method="post">
+    <Form method="post" onSubmit={handleSubmit}>
       <VStack spacing="2rem">
         <Text>
           {formType === AUTH_TYPE.SIGN_UP && 'Sign Up'}
           {formType === AUTH_TYPE.SIGN_IN && 'Sign In'}
         </Text>
-        <FormInput
+        <FormElement
           type="email"
           name={AUTH_INPUT_NAMES.EMAIL}
           label="Email"
           placeholder="Enter email..."
-          isRequired
         />
-        <FormInput
+        <FormElement
           type="password"
           name={AUTH_INPUT_NAMES.PASSWORD}
           label="Password"
           placeholder="Enter password..."
-          isRequired
         />
         {formType === AUTH_TYPE.SIGN_UP && (
-          <FormInput
+          <FormElement
             type="password"
             name={AUTH_INPUT_NAMES.CONFIRM_PASSWORD}
             label="Confirm password"
             placeholder="Enter password confirmation..."
-            isRequired
           />
         )}
         <Flex mt="2rem" w="100%" justifyContent="space-around">
           <Link
             to={formType === AUTH_TYPE.SIGN_UP ? ROUTES.SIGN_IN : ROUTES.SIGN_UP}
           >
-            <Button>
+            <Button onClick={() => resetFormState()}>
               {formType === AUTH_TYPE.SIGN_UP && 'Sign In'}
               {formType === AUTH_TYPE.SIGN_IN && 'Sign Up'}
             </Button>
