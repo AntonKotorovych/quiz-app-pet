@@ -1,9 +1,12 @@
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
+  InputGroup,
   InputProps,
+  InputRightElement,
 } from '@chakra-ui/react';
 import { AUTH_INPUT_NAMES } from 'constants/enums';
 import { FormActions, useFormStore } from 'hooks/useFormStore';
@@ -26,25 +29,29 @@ export default function FormElement({
       `set${name.charAt(0).toUpperCase() + name.slice(1)}` as keyof FormActions;
     return state[setterMethod];
   });
+  const setIsVisiblePassword = useFormStore(state => state.setIsVisiblePassword);
   const error = useFormStore(state => state[`${name}Error`]);
-  // const setError = useFormStore(
-  //   state =>
-  //     state[
-  //       `set${name.charAt(0).toUpperCase() + name.slice(1)}Error` as keyof FormActions
-  //     ]
-  // );
 
   return (
     <FormControl isInvalid={!!error}>
       <FormLabel>{label}</FormLabel>
-      <Input
-        type={type}
-        placeholder={placeholder}
-        isRequired={isRequired}
-        value={value}
-        name={name}
-        onChange={event => setValue(event.target.value)}
-      />
+      <InputGroup>
+        <Input
+          type={type}
+          placeholder={placeholder}
+          isRequired={isRequired}
+          value={value}
+          name={name}
+          onChange={event => setValue(event.target.value)}
+        />
+        {(name === AUTH_INPUT_NAMES.PASSWORD ||
+          name === AUTH_INPUT_NAMES.CONFIRM_PASSWORD) && (
+          <InputRightElement cursor={'pointer'} onClick={setIsVisiblePassword}>
+            {type === 'password' && <ViewIcon />}
+            {type === 'text' && <ViewOffIcon />}
+          </InputRightElement>
+        )}
+      </InputGroup>
       <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
   );

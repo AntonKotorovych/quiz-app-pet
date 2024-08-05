@@ -14,6 +14,7 @@ export default function AuthenticationForm({ formType }: Props) {
   const getEmail = useFormStore(state => state.getEmail);
   const getPassword = useFormStore(state => state.getPassword);
   const getConfirmPassword = useFormStore(state => state.getConfirmPassword);
+  const isVisiblePassword = useFormStore(state => state.isVisiblePassword);
 
   const setEmailError = useFormStore(state => state.setEmailError);
   const setPasswordError = useFormStore(state => state.setPasswordError);
@@ -63,7 +64,7 @@ export default function AuthenticationForm({ formType }: Props) {
 
   return (
     <Form method="post" onSubmit={handleSubmit}>
-      <VStack spacing="2rem">
+      <VStack spacing="2rem" userSelect="none">
         <Text>
           {formType === AUTH_TYPE.SIGN_UP && 'Sign Up'}
           {formType === AUTH_TYPE.SIGN_IN && 'Sign In'}
@@ -75,14 +76,14 @@ export default function AuthenticationForm({ formType }: Props) {
           placeholder="Enter email..."
         />
         <FormElement
-          type="password"
+          type={isVisiblePassword ? 'text' : 'password'}
           name={AUTH_INPUT_NAMES.PASSWORD}
           label="Password"
           placeholder="Enter password..."
         />
         {formType === AUTH_TYPE.SIGN_UP && (
           <FormElement
-            type="password"
+            type={isVisiblePassword ? 'text' : 'password'}
             name={AUTH_INPUT_NAMES.CONFIRM_PASSWORD}
             label="Confirm password"
             placeholder="Enter password confirmation..."
@@ -92,7 +93,7 @@ export default function AuthenticationForm({ formType }: Props) {
           <Link
             to={formType === AUTH_TYPE.SIGN_UP ? ROUTES.SIGN_IN : ROUTES.SIGN_UP}
           >
-            <Button onClick={() => resetFormState()}>
+            <Button colorScheme="blackAlpha" onClick={() => resetFormState()}>
               {formType === AUTH_TYPE.SIGN_UP && 'Sign In'}
               {formType === AUTH_TYPE.SIGN_IN && 'Sign Up'}
             </Button>

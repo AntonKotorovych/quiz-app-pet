@@ -7,6 +7,7 @@ interface FormState {
   emailError: string;
   passwordError: string;
   confirmPasswordError: string;
+  isVisiblePassword: boolean;
 }
 
 export interface FormActions {
@@ -19,6 +20,7 @@ export interface FormActions {
   setEmailError: (emailError: string) => void;
   setPasswordError: (passwordError: string) => void;
   setConfirmPasswordError: (confirmPasswordError: string) => void;
+  setIsVisiblePassword: VoidFunction;
   clearErrors: VoidFunction;
   resetFormState: VoidFunction;
 }
@@ -32,6 +34,7 @@ const DEFAULT_FORM_STATE: FormState = {
   emailError: '',
   passwordError: '',
   confirmPasswordError: '',
+  isVisiblePassword: false,
 };
 
 export const useFormStore = create<FormStore>((set, get) => ({
@@ -45,6 +48,8 @@ export const useFormStore = create<FormStore>((set, get) => ({
   setEmailError: emailError => set({ emailError }),
   setPasswordError: passwordError => set({ passwordError }),
   setConfirmPasswordError: confirmPasswordError => set({ confirmPasswordError }),
+  setIsVisiblePassword: () =>
+    set(state => ({ isVisiblePassword: !state.isVisiblePassword })),
   clearErrors: () => {
     set({
       emailError: '',
