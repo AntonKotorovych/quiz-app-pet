@@ -29,7 +29,9 @@ export default function FormElement({
       `set${name.charAt(0).toUpperCase() + name.slice(1)}` as keyof FormActions;
     return state[setterMethod];
   });
-  const setIsVisiblePassword = useFormStore(state => state.setIsVisiblePassword);
+  const toggleIsVisiblePassword = useFormStore(
+    state => state.toggleIsVisiblePassword
+  );
   const error = useFormStore(state => state[`${name}Error`]);
 
   return (
@@ -46,7 +48,7 @@ export default function FormElement({
         />
         {(name === AUTH_INPUT_NAMES.PASSWORD ||
           name === AUTH_INPUT_NAMES.CONFIRM_PASSWORD) && (
-          <InputRightElement cursor={'pointer'} onClick={setIsVisiblePassword}>
+          <InputRightElement cursor={'pointer'} onClick={toggleIsVisiblePassword}>
             {type === 'password' && <ViewIcon />}
             {type === 'text' && <ViewOffIcon />}
           </InputRightElement>

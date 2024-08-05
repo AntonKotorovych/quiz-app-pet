@@ -44,7 +44,7 @@ export default function AuthenticationForm({ formType }: Props) {
         isValid = false;
       }
 
-      if (password.length < 8 || password.length > 25) {
+      if (password.length < 7 || password.length > 25) {
         setPasswordError('Password must be between 7 and 25 characters.');
         isValid = false;
       } else if (!hasNumber.test(password)) {
