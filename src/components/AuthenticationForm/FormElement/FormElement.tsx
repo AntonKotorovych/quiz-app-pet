@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {
+  Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -9,12 +10,13 @@ import {
   InputProps,
   InputRightElement,
 } from '@chakra-ui/react';
-import { AUTH_INPUT_NAMES } from 'constants/enums';
-import { FormActions, useFormStore } from 'hooks/useFormStore';
+import { useFormStore } from 'hooks/useFormStore';
+import { AuthFormKeys } from 'types/types';
 
 interface Props extends InputProps {
   label: string;
-  name: AUTH_INPUT_NAMES;
+  name: AuthFormKeys;
+  toggleVisibility?: VoidFunction;
 }
 
 export default function FormElement({
@@ -23,31 +25,20 @@ export default function FormElement({
   placeholder,
   isRequired,
   name,
+  toggleVisibility,
 }: Props) {
-  const value = useFormStore(state => state[name]);
-  const setValue = useFormStore(state => {
-    const setterMethod =
-      `set${name.charAt(0).toUpperCase() + name.slice(1)}` as keyof FormActions;
-    return state[setterMethod];
-  });
-  const toggleIsVisiblePassword = useFormStore(
-    state => state.toggleIsVisiblePassword
-  );
-  const error = useFormStore(state => state[`${name}Error`]);
-  const setError = useFormStore(
-    state =>
-      state[
-        `set${name.charAt(0).toUpperCase() + name.slice(1)}Error` as keyof FormActions
-      ]
-  );
+  const value = useFormStore(state => state.state[name]);
+  const setFieldByName = useFormStore(state => state.setFieldByName);
+  const error = useFormStore(state => state.errors[`${name}`]);
+  const setErrorByName = useFormStore(state => state.setErrorByName);
 
   const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-    setError('');
+    setFieldByName({ key: name, value: event.target.value });
+    setErrorByName({ key: name, value: '' });
   };
 
   return (
-    <FormControl isInvalid={!!error}>
+    <FormControl isInvalid={Boolean(error)}>
       <FormLabel>{label}</FormLabel>
       <InputGroup>
         <Input
@@ -58,11 +49,12 @@ export default function FormElement({
           name={name}
           onChange={handleChangeValue}
         />
-        {(name === AUTH_INPUT_NAMES.PASSWORD ||
-          name === AUTH_INPUT_NAMES.CONFIRM_PASSWORD) && (
-          <InputRightElement cursor={'pointer'} onClick={toggleIsVisiblePassword}>
-            {type === 'password' && <ViewIcon />}
-            {type === 'text' && <ViewOffIcon />}
+        {(name === 'password' || name === 'confirmPassword') && (
+          <InputRightElement>
+            <Button onClick={toggleVisibility}>
+              {type === 'password' && <ViewIcon />}
+              {type === 'text' && <ViewOffIcon />}
+            </Button>
           </InputRightElement>
         )}
       </InputGroup>
