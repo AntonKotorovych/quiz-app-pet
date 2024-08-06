@@ -1,7 +1,8 @@
 import { FormEvent } from 'react';
 import { Button, Flex, Text, VStack } from '@chakra-ui/react';
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, useNavigate } from 'react-router-dom';
 import { AUTH_INPUT_NAMES, AUTH_TYPE } from 'constants/enums';
+import { emailPattern, hasNumber } from 'constants/regexps';
 import { useFormStore } from 'hooks/useFormStore';
 import { ROUTES } from 'constants/routes';
 import FormElement from './FormElement';
@@ -12,11 +13,13 @@ interface Props {
 
 export default function AuthenticationForm({ formType }: Props) {
   const getEmail = useFormStore(state => state.getEmail);
+  const getUsername = useFormStore(state => state.getUsername);
   const getPassword = useFormStore(state => state.getPassword);
   const getConfirmPassword = useFormStore(state => state.getConfirmPassword);
   const isVisiblePassword = useFormStore(state => state.isVisiblePassword);
 
   const setEmailError = useFormStore(state => state.setEmailError);
+  const setUsernameError = useFormStore(state => state.setUsernameError);
   const setPasswordError = useFormStore(state => state.setPasswordError);
   const setConfirmPasswordError = useFormStore(
     state => state.setConfirmPasswordError
@@ -25,22 +28,27 @@ export default function AuthenticationForm({ formType }: Props) {
 
   const resetFormState = useFormStore(state => state.resetFormState);
 
+  const navigate = useNavigate();
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     clearErrors();
 
+    const email = getEmail();
+    const username = getUsername();
+    const password = getPassword();
+    const confirmPassword = getConfirmPassword();
+
+    let isValid = true;
+
     if (formType === AUTH_TYPE.SIGN_UP) {
-      let isValid = true;
-
-      const email = getEmail();
-      const password = getPassword();
-      const confirmPassword = getConfirmPassword();
-
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const hasNumber = /\d/;
-
       if (!emailPattern.test(email)) {
         setEmailError('Invalid email address');
+        isValid = false;
+      }
+
+      if (username.length > 15) {
+        setUsernameError('Username must contain no more than 15 characters');
         isValid = false;
       }
 
@@ -57,8 +65,25 @@ export default function AuthenticationForm({ formType }: Props) {
         setConfirmPasswordError('Passwords do not match.');
         isValid = false;
       }
+    }
 
-      if (isValid) console.log('Form is Valid!');
+    if (formType === AUTH_TYPE.SIGN_IN) {
+      if (!emailPattern.test(email)) {
+        setEmailError('Invalid email address');
+        isValid = false;
+      }
+    }
+
+    if (isValid && formType === AUTH_TYPE.SIGN_UP) {
+      console.log('Sign Up Form is Valid!');
+      resetFormState();
+      navigate(ROUTES.SIGN_IN);
+    } else if (isValid && formType === AUTH_TYPE.SIGN_IN) {
+      console.log('Sign In Form is Valid!');
+      resetFormState();
+      navigate(ROUTES.HOME);
+    } else {
+      return;
     }
   };
 
@@ -74,12 +99,23 @@ export default function AuthenticationForm({ formType }: Props) {
           name={AUTH_INPUT_NAMES.EMAIL}
           label="Email"
           placeholder="Enter email..."
+          isRequired
         />
+        {formType === AUTH_TYPE.SIGN_UP && (
+          <FormElement
+            type="text"
+            name={AUTH_INPUT_NAMES.USERNAME}
+            label="Username"
+            placeholder="Enter username..."
+            isRequired
+          />
+        )}
         <FormElement
           type={isVisiblePassword ? 'text' : 'password'}
           name={AUTH_INPUT_NAMES.PASSWORD}
           label="Password"
           placeholder="Enter password..."
+          isRequired
         />
         {formType === AUTH_TYPE.SIGN_UP && (
           <FormElement
@@ -87,6 +123,7 @@ export default function AuthenticationForm({ formType }: Props) {
             name={AUTH_INPUT_NAMES.CONFIRM_PASSWORD}
             label="Confirm password"
             placeholder="Enter password confirmation..."
+            isRequired
           />
         )}
         <Flex mt="2rem" w="100%" justifyContent="space-around">

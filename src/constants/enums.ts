@@ -5,6 +5,7 @@ export enum AUTH_TYPE {
 
 export enum AUTH_INPUT_NAMES {
   EMAIL = 'email',
+  USERNAME = 'username',
   PASSWORD = 'password',
   CONFIRM_PASSWORD = 'confirmPassword',
 }

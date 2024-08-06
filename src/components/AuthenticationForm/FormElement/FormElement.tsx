@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {
   FormControl,
@@ -33,6 +34,17 @@ export default function FormElement({
     state => state.toggleIsVisiblePassword
   );
   const error = useFormStore(state => state[`${name}Error`]);
+  const setError = useFormStore(
+    state =>
+      state[
+        `set${name.charAt(0).toUpperCase() + name.slice(1)}Error` as keyof FormActions
+      ]
+  );
+
+  const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+    setError('');
+  };
 
   return (
     <FormControl isInvalid={!!error}>
@@ -44,7 +56,7 @@ export default function FormElement({
           isRequired={isRequired}
           value={value}
           name={name}
-          onChange={event => setValue(event.target.value)}
+          onChange={handleChangeValue}
         />
         {(name === AUTH_INPUT_NAMES.PASSWORD ||
           name === AUTH_INPUT_NAMES.CONFIRM_PASSWORD) && (
