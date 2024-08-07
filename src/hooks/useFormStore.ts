@@ -2,23 +2,23 @@ import { create } from 'zustand';
 import { AUTH_TYPE } from 'constants/enums';
 import { DIGIT_REGEX, EMAIL_REGEX } from 'constants/regexps';
 
+const DEFAULT_STATE_VALUES = {
+  email: '',
+  userName: '',
+  password: '',
+  confirmPassword: '',
+};
+
+type StateValuesType = typeof DEFAULT_STATE_VALUES;
+export type AuthFormKeys = keyof StateValuesType;
+
 interface FormState {
-  state: {
-    email: string;
-    userName: string;
-    password: string;
-    confirmPassword: string;
-  };
-  errors: {
-    email: string;
-    userName: string;
-    password: string;
-    confirmPassword: string;
-  };
+  state: StateValuesType;
+  errors: StateValuesType;
 }
 
 interface FormPayload {
-  key: string;
+  key: AuthFormKeys;
   value: string;
 }
 
@@ -33,18 +33,8 @@ interface FormActions {
 type FormStore = FormState & FormActions;
 
 const DEFAULT_FORM_STATE: FormState = {
-  state: {
-    email: '',
-    userName: '',
-    password: '',
-    confirmPassword: '',
-  },
-  errors: {
-    email: '',
-    userName: '',
-    password: '',
-    confirmPassword: '',
-  },
+  state: DEFAULT_STATE_VALUES,
+  errors: DEFAULT_STATE_VALUES,
 };
 
 export const useFormStore = create<FormStore>((set, get) => ({
@@ -59,12 +49,7 @@ export const useFormStore = create<FormStore>((set, get) => ({
     })),
   clearErrors: () => {
     set({
-      errors: {
-        email: '',
-        userName: '',
-        password: '',
-        confirmPassword: '',
-      },
+      errors: DEFAULT_STATE_VALUES,
     });
   },
   resetFormState: () => {

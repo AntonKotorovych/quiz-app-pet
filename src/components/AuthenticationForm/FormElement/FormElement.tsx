@@ -10,12 +10,12 @@ import {
   InputProps,
   InputRightElement,
 } from '@chakra-ui/react';
-import { useFormStore } from 'hooks/useFormStore';
-import { AuthFormKeys } from 'types/types';
+import { AuthFormKeys, useFormStore } from 'hooks/useFormStore';
 
 interface Props extends InputProps {
   label: string;
   name: AuthFormKeys;
+  withInputRight?: undefined | true;
   toggleVisibility?: VoidFunction;
 }
 
@@ -25,16 +25,20 @@ export default function FormElement({
   placeholder,
   isRequired,
   name,
+  withInputRight,
   toggleVisibility,
 }: Props) {
   const value = useFormStore(state => state.state[name]);
   const setFieldByName = useFormStore(state => state.setFieldByName);
-  const error = useFormStore(state => state.errors[`${name}`]);
+  const error = useFormStore(state => state.errors[name]);
   const setErrorByName = useFormStore(state => state.setErrorByName);
+
+  console.log(name, withInputRight);
 
   const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
     setFieldByName({ key: name, value: event.target.value });
-    setErrorByName({ key: name, value: '' });
+
+    if (error) setErrorByName({ key: name, value: '' });
   };
 
   return (
@@ -49,7 +53,7 @@ export default function FormElement({
           name={name}
           onChange={handleChangeValue}
         />
-        {(name === 'password' || name === 'confirmPassword') && (
+        {withInputRight && (
           <InputRightElement>
             <Button onClick={toggleVisibility}>
               {type === 'password' && <ViewIcon />}

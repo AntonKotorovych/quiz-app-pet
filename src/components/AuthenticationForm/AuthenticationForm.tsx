@@ -28,11 +28,9 @@ export default function AuthenticationForm({ formType }: Props) {
     const isValid = validateFields(formType);
 
     if (isValid && formType === AUTH_TYPE.SIGN_UP) {
-      console.log('Sign Up Form is Valid!');
       resetFormState();
       navigate(ROUTES.SIGN_IN);
     } else if (isValid && formType === AUTH_TYPE.SIGN_IN) {
-      console.log('Sign In Form is Valid!');
       resetFormState();
       navigate(ROUTES.HOME);
     } else {
@@ -71,6 +69,7 @@ export default function AuthenticationForm({ formType }: Props) {
           name="password"
           label="Password"
           placeholder="Enter password..."
+          withInputRight
           toggleVisibility={togglePasswordVisibility}
           isRequired
         />
@@ -80,6 +79,7 @@ export default function AuthenticationForm({ formType }: Props) {
             name="confirmPassword"
             label="Confirm password"
             placeholder="Enter password confirmation..."
+            withInputRight
             toggleVisibility={togglePasswordVisibility}
             isRequired
           />
