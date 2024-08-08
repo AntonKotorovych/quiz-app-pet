@@ -33,8 +33,6 @@ export default function FormElement({
   const error = useFormStore(state => state.errors[name]);
   const setErrorByName = useFormStore(state => state.setErrorByName);
 
-  console.log(name, withInputRight);
-
   const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
     setFieldByName({ key: name, value: event.target.value });
 
