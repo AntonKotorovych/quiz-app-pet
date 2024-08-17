@@ -1,10 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Button, Text, VStack } from '@chakra-ui/react';
 import { Form, Link, useLocation, useNavigate } from 'react-router-dom';
-import { AUTH_TYPE } from 'constants/enums';
+import { AUTH_TYPE, TOAST_STATUS } from 'constants/enums';
 import { useFormStore } from 'hooks/useFormStore';
 import { ROUTES } from 'constants/routes';
 import { FORM_CONFIG } from 'constants/constants';
+import { useSignUpMutation } from 'hooks/useSignUpMutation';
+import { useToastNotification } from 'hooks/useToastNotification';
 import FormElement from './FormElement';
 import { ButtonContainer } from './styles';
 
@@ -16,6 +18,11 @@ export default function AuthenticationForm({ formType }: Props) {
   const validateFields = useFormStore(state => state.validateFields);
   const clearErrors = useFormStore(state => state.clearErrors);
   const resetFormState = useFormStore(state => state.resetFormState);
+  const getFormState = useFormStore(state => state.getFormState);
+  const setErrorByName = useFormStore(state => state.setErrorByName);
+
+  const { mutate } = useSignUpMutation();
+  const { showNotification } = useToastNotification();
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -28,8 +35,31 @@ export default function AuthenticationForm({ formType }: Props) {
     const isValid = validateFields(formType);
 
     if (isValid && formType === AUTH_TYPE.SIGN_UP) {
-      resetFormState();
-      navigate(ROUTES.SIGN_IN);
+      const formState = getFormState();
+
+      showNotification(TOAST_STATUS.loading, {
+        title: 'Registration.',
+        description: 'Wait please...',
+      });
+
+      mutate(formState, {
+        onError: error => {
+          setErrorByName({ key: 'email', value: error.message });
+          showNotification(TOAST_STATUS.error, {
+            title: 'Unsuccess',
+            description: error.message,
+          });
+        },
+        onSuccess: () => {
+          resetFormState();
+          navigate(ROUTES.SIGN_IN);
+          showNotification(TOAST_STATUS.success, {
+            title: 'Registration Complete!',
+            description:
+              'Your registration was successful. Please log in with your username and password.',
+          });
+        },
+      });
     } else if (isValid && formType === AUTH_TYPE.SIGN_IN) {
       resetFormState();
       navigate(ROUTES.HOME);
