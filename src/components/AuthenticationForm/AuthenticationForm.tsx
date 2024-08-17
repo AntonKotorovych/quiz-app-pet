@@ -37,7 +37,7 @@ export default function AuthenticationForm({ formType }: Props) {
     if (isValid && formType === AUTH_TYPE.SIGN_UP) {
       const formState = getFormState();
 
-      showNotification(TOAST_STATUS.loading, {
+      showNotification(TOAST_STATUS.LOADING, {
         title: 'Registration.',
         description: 'Wait please...',
       });
@@ -45,7 +45,7 @@ export default function AuthenticationForm({ formType }: Props) {
       mutate(formState, {
         onError: error => {
           setErrorByName({ key: 'email', value: error.message });
-          showNotification(TOAST_STATUS.error, {
+          showNotification(TOAST_STATUS.ERROR, {
             title: 'Unsuccess',
             description: error.message,
           });
@@ -53,7 +53,7 @@ export default function AuthenticationForm({ formType }: Props) {
         onSuccess: () => {
           resetFormState();
           navigate(ROUTES.SIGN_IN);
-          showNotification(TOAST_STATUS.success, {
+          showNotification(TOAST_STATUS.SUCCESS, {
             title: 'Registration Complete!',
             description:
               'Your registration was successful. Please log in with your username and password.',

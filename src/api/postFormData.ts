@@ -22,7 +22,6 @@ export async function postFormData(formData: StateValuesType) {
       const postResponse = await databaseInstance.post('', formData);
       return postResponse;
     } else {
-      console.log('postFormDataPromiseReject');
       return Promise.reject(
         new Error('User with this email or username already exists')
       );

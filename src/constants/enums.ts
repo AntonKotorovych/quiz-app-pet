@@ -4,7 +4,7 @@ export enum AUTH_TYPE {
 }
 
 export enum TOAST_STATUS {
-  success = 'success',
-  loading = 'loading',
-  error = 'error',
+  SUCCESS = 'success',
+  LOADING = 'loading',
+  ERROR = 'error',
 }
