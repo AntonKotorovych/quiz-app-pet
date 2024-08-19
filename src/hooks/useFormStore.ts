@@ -11,6 +11,10 @@ const DEFAULT_STATE_VALUES = {
 
 export type StateValuesType = typeof DEFAULT_STATE_VALUES;
 export type AuthFormKeys = keyof StateValuesType;
+export type LoginCredentials = {
+  email: string;
+  password: string;
+};
 
 interface FormState {
   state: StateValuesType;
@@ -29,6 +33,7 @@ interface FormActions {
   resetFormState: VoidFunction;
   validateFields: (formType: AUTH_TYPE) => boolean;
   getFormState: () => StateValuesType;
+  getLoginCredentials: () => LoginCredentials;
 }
 
 type FormStore = FormState & FormActions;
@@ -57,6 +62,10 @@ export const useFormStore = create<FormStore>((set, get) => ({
     set(DEFAULT_FORM_STATE);
   },
   getFormState: () => get().state,
+  getLoginCredentials: () => ({
+    email: get().state.email,
+    password: get().state.password,
+  }),
   validateFields: formType => {
     const { email, userName, password, confirmPassword } = get().state;
     const { setErrorByName } = get();

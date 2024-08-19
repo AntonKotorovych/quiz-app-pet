@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
-import { postFormData } from 'api/postFormData';
+import { loginUser } from 'api/loginUser';
 import { useFormStore } from './useFormStore';
 
-export const useSignUpMutation = () => {
+export const useSignInMutation = () => {
   const setErrorByName = useFormStore(state => state.setErrorByName);
 
   return useMutation({
-    mutationFn: postFormData,
+    mutationFn: loginUser,
     onError: error => {
       setErrorByName({ key: 'email', value: error.message });
     },

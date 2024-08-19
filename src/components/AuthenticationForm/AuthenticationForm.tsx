@@ -6,6 +6,7 @@ import { useFormStore } from 'hooks/useFormStore';
 import { ROUTES } from 'constants/routes';
 import { FORM_CONFIG } from 'constants/constants';
 import { useSignUpMutation } from 'hooks/useSignUpMutation';
+import { useSignInMutation } from 'hooks/useSignInMutation';
 import { useToastNotification } from 'hooks/useToastNotification';
 import FormElement from './FormElement';
 import { ButtonContainer } from './styles';
@@ -19,9 +20,11 @@ export default function AuthenticationForm({ formType }: Props) {
   const clearErrors = useFormStore(state => state.clearErrors);
   const resetFormState = useFormStore(state => state.resetFormState);
   const getFormState = useFormStore(state => state.getFormState);
-  const setErrorByName = useFormStore(state => state.setErrorByName);
+  const getLoginCredentials = useFormStore(state => state.getLoginCredentials);
 
-  const { mutate } = useSignUpMutation();
+  const { mutate: signUp } = useSignUpMutation();
+  const { mutate: signIn } = useSignInMutation();
+
   const { showNotification } = useToastNotification();
 
   const navigate = useNavigate();
@@ -42,9 +45,8 @@ export default function AuthenticationForm({ formType }: Props) {
         description: 'Wait please...',
       });
 
-      mutate(formState, {
+      signUp(formState, {
         onError: error => {
-          setErrorByName({ key: 'email', value: error.message });
           showNotification(TOAST_STATUS.ERROR, {
             title: 'Unsuccess',
             description: error.message,
@@ -61,8 +63,29 @@ export default function AuthenticationForm({ formType }: Props) {
         },
       });
     } else if (isValid && formType === AUTH_TYPE.SIGN_IN) {
-      resetFormState();
-      navigate(ROUTES.HOME);
+      const loginCredentials = getLoginCredentials();
+
+      showNotification(TOAST_STATUS.LOADING, {
+        title: 'Signing in',
+        description: 'Please wait while we log you in...',
+      });
+
+      signIn(loginCredentials, {
+        onError: error => {
+          showNotification(TOAST_STATUS.ERROR, {
+            title: 'Sign In Failed',
+            description: error.message,
+          });
+        },
+        onSuccess: userData => {
+          resetFormState();
+          navigate(ROUTES.HOME);
+          showNotification(TOAST_STATUS.SUCCESS, {
+            title: 'Sign In Successful!',
+            description: `Greetings ${userData.displayName}, You have been logged in successfully.`,
+          });
+        },
+      });
     } else {
       return;
     }
