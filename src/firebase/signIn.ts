@@ -1,16 +1,32 @@
-import { signInWithEmailAndPassword, AuthErrorCodes } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  AuthErrorCodes,
+  signInWithPopup,
+} from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { LoginCredentials } from 'hooks/useFormStore';
+import { LOGIN_METHOD } from 'constants/enums';
 import { auth } from './firebaseConfig';
+import { googleProvider } from './googleProvider';
 
-export async function signIn(userData: LoginCredentials) {
+export interface SignIn {
+  userData?: LoginCredentials;
+  loginMethod?: LOGIN_METHOD;
+}
+
+export async function signIn({ userData, loginMethod }: SignIn) {
   try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      userData.email,
-      userData.password
-    );
-    return userCredential.user;
+    if (userData && loginMethod === LOGIN_METHOD.EMAIL_AND_PASSWORD) {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password
+      );
+      return userCredential.user;
+    } else if (loginMethod === LOGIN_METHOD.GOOGLE) {
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      return userCredential.user;
+    }
   } catch (error) {
     if (error instanceof FirebaseError) {
       if (error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {

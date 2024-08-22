@@ -8,3 +8,8 @@ export enum TOAST_STATUS {
   LOADING = 'loading',
   ERROR = 'error',
 }
+
+export enum LOGIN_METHOD {
+  EMAIL_AND_PASSWORD = 'email/password',
+  GOOGLE = 'google',
+}
