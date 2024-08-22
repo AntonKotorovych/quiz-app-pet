@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
-import { loginUser } from 'api/loginUser';
+import { signIn } from 'firebase/signIn';
 import { useFormStore } from './useFormStore';
 
 export const useSignInMutation = () => {
   const setErrorByName = useFormStore(state => state.setErrorByName);
 
   return useMutation({
-    mutationFn: loginUser,
+    mutationFn: signIn,
     onError: error => {
       setErrorByName({ key: 'email', value: error.message });
     },

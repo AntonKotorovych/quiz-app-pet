@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Button, Text, VStack } from '@chakra-ui/react';
 import { Form, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link as ChakraLink } from '@chakra-ui/react';
 import { AUTH_TYPE, TOAST_STATUS } from 'constants/enums';
 import { useFormStore } from 'hooks/useFormStore';
 import { ROUTES } from 'constants/routes';
@@ -138,12 +139,19 @@ export default function AuthenticationForm({ formType }: Props) {
           />
         )}
         <ButtonContainer>
-          <Link to={FORM_CONFIG[formType].redirectRoute}>
+          <ChakraLink
+            fontWeight="normal"
+            fontSize="sm"
+            _hover={{ color: 'green.500', textDecor: 'underline' }}
+            as={Link}
+            to={FORM_CONFIG[formType].redirectRoute}
+          >
             {FORM_CONFIG[formType].redirectLinkText}
-          </Link>
+          </ChakraLink>
           <Button type="submit" colorScheme="green">
             {FORM_CONFIG[formType].submitText}
           </Button>
+          <Button colorScheme="teal">Sign in with Google</Button>
         </ButtonContainer>
       </VStack>
     </Form>

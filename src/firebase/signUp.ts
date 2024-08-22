@@ -1,13 +1,17 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { updateProfile } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  AuthErrorCodes,
+  signOut,
+} from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { StateValuesType } from 'hooks/useFormStore';
-import { firebaseAuth } from './firebase';
+import { auth } from './firebaseConfig';
 
-export async function postFormData(formData: StateValuesType) {
+export async function signUp(formData: StateValuesType) {
   try {
     const userCredential = await createUserWithEmailAndPassword(
-      firebaseAuth,
+      auth,
       formData.email,
       formData.password
     );
@@ -15,9 +19,11 @@ export async function postFormData(formData: StateValuesType) {
     updateProfile(userCredential.user, {
       displayName: formData.userName,
     });
+
+    await signOut(auth); // done for not to automatically login new user because of firebase specific working (auto sign in) in signUp case
   } catch (error) {
     if (error instanceof FirebaseError) {
-      if (error.code === 'auth/email-already-in-use') {
+      if (error.code === AuthErrorCodes.EMAIL_EXISTS) {
         return Promise.reject(new Error('User with this email already exists'));
       }
     }

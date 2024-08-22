@@ -13,13 +13,13 @@ type AuthFormConfig = Record<AUTH_TYPE, FormConfig>;
 export const FORM_CONFIG: AuthFormConfig = {
   [AUTH_TYPE.SIGN_UP]: {
     submitText: 'Sign Up',
-    redirectLinkText: 'Sign In',
+    redirectLinkText: 'Have an account? Log In',
     redirectRoute: ROUTES.SIGN_IN,
     title: 'Sign Up',
   },
   [AUTH_TYPE.SIGN_IN]: {
     submitText: 'Sign In',
-    redirectLinkText: 'Sign Up',
+    redirectLinkText: 'No account yet? Sign Up',
     redirectRoute: ROUTES.SIGN_UP,
     title: 'Sign In',
   },

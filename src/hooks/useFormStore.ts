@@ -71,47 +71,47 @@ export const useFormStore = create<FormStore>((set, get) => ({
     const { setErrorByName } = get();
     let isValid = true;
 
-    // if (formType === AUTH_TYPE.SIGN_UP) {
-    //   if (!EMAIL_REGEX.test(email)) {
-    //     setErrorByName({ key: 'email', value: 'Invalid email address' });
-    //     isValid = false;
-    //   }
+    if (formType === AUTH_TYPE.SIGN_UP) {
+      if (!EMAIL_REGEX.test(email)) {
+        setErrorByName({ key: 'email', value: 'Invalid email address' });
+        isValid = false;
+      }
 
-    //   if (userName.length > 15) {
-    //     setErrorByName({
-    //       key: 'userName',
-    //       value: 'Username must contain no more than 15 characters',
-    //     });
-    //     isValid = false;
-    //   }
+      if (userName.length > 15) {
+        setErrorByName({
+          key: 'userName',
+          value: 'Username must contain no more than 15 characters',
+        });
+        isValid = false;
+      }
 
-    //   if (password.length < 7 || password.length > 25) {
-    //     setErrorByName({
-    //       key: 'password',
-    //       value: 'Password must be between 7 and 25 characters.',
-    //     });
-    //     isValid = false;
-    //   } else if (!DIGIT_REGEX.test(password)) {
-    //     setErrorByName({
-    //       key: 'password',
-    //       value: 'Password must contain at least one number.',
-    //     });
-    //     isValid = false;
-    //   }
+      if (password.length < 7 || password.length > 25) {
+        setErrorByName({
+          key: 'password',
+          value: 'Password must be between 7 and 25 characters.',
+        });
+        isValid = false;
+      } else if (!DIGIT_REGEX.test(password)) {
+        setErrorByName({
+          key: 'password',
+          value: 'Password must contain at least one number.',
+        });
+        isValid = false;
+      }
 
-    //   if (password !== confirmPassword) {
-    //     setErrorByName({ key: 'password', value: 'Passwords do not match.' });
-    //     setErrorByName({ key: 'confirmPassword', value: 'Passwords do not match.' });
-    //     isValid = false;
-    //   }
-    // }
+      if (password !== confirmPassword) {
+        setErrorByName({ key: 'password', value: 'Passwords do not match.' });
+        setErrorByName({ key: 'confirmPassword', value: 'Passwords do not match.' });
+        isValid = false;
+      }
+    }
 
-    // if (formType === AUTH_TYPE.SIGN_IN) {
-    //   if (!EMAIL_REGEX.test(email)) {
-    //     setErrorByName({ key: 'email', value: 'Invalid email address' });
-    //     isValid = false;
-    //   }
-    // }
+    if (formType === AUTH_TYPE.SIGN_IN) {
+      if (!EMAIL_REGEX.test(email)) {
+        setErrorByName({ key: 'email', value: 'Invalid email address' });
+        isValid = false;
+      }
+    }
 
     return isValid;
   },
