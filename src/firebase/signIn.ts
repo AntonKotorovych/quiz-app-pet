@@ -8,6 +8,7 @@ import { LoginCredentials } from 'hooks/useFormStore';
 import { LOGIN_METHOD } from 'constants/enums';
 import { auth } from './firebaseConfig';
 import { googleProvider } from './googleProvider';
+import { facebookProvider } from './facebookProvider';
 
 export interface SignIn {
   userData?: LoginCredentials;
@@ -25,6 +26,9 @@ export async function signIn({ userData, loginMethod }: SignIn) {
       return userCredential.user;
     } else if (loginMethod === LOGIN_METHOD.GOOGLE) {
       const userCredential = await signInWithPopup(auth, googleProvider);
+      return userCredential.user;
+    } else if (loginMethod === LOGIN_METHOD.FACEBOOK) {
+      const userCredential = await signInWithPopup(auth, facebookProvider);
       return userCredential.user;
     }
   } catch (error) {

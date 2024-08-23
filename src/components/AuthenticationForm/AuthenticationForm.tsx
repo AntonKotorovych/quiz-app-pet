@@ -2,7 +2,6 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Box, Button, Text, VStack } from '@chakra-ui/react';
 import { Form, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
-import GoogleButton from 'react-google-button';
 import { AUTH_TYPE, LOGIN_METHOD, TOAST_STATUS } from 'constants/enums';
 import { useFormStore } from 'hooks/useFormStore';
 import { ROUTES } from 'constants/routes';
@@ -13,6 +12,7 @@ import { useToastNotification } from 'hooks/useToastNotification';
 import { SignIn } from 'firebase/signIn';
 import FormElement from './FormElement';
 import { ButtonContainer } from './styles';
+import AuthServiceButtons from './AuthServiceButtons';
 
 interface Props {
   formType: AUTH_TYPE;
@@ -168,11 +168,14 @@ export default function AuthenticationForm({ formType }: Props) {
               <Text textAlign="center" fontWeight="normal">
                 or
               </Text>
-              <Box mt="0.5rem">
-                <GoogleButton
-                  onClick={() => handleSignIn({ loginMethod: LOGIN_METHOD.GOOGLE })}
-                />
-              </Box>
+              <AuthServiceButtons
+                onGoogleClick={() =>
+                  handleSignIn({ loginMethod: LOGIN_METHOD.GOOGLE })
+                }
+                onFacebookClick={() =>
+                  handleSignIn({ loginMethod: LOGIN_METHOD.FACEBOOK })
+                }
+              />
             </Box>
           )}
         </ButtonContainer>

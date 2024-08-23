@@ -12,4 +12,5 @@ export enum TOAST_STATUS {
 export enum LOGIN_METHOD {
   EMAIL_AND_PASSWORD = 'email/password',
   GOOGLE = 'google',
+  FACEBOOK = 'facebook',
 }
