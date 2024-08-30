@@ -23,17 +23,19 @@ export async function signIn({ userData, loginMethod }: SignIn) {
     switch (loginMethod) {
       case LOGIN_METHOD.EMAIL_PASSWORD:
         if (userData) {
-          return (
-            await signInWithEmailAndPassword(auth, userData.email, userData.password)
-          ).user;
+          return await signInWithEmailAndPassword(
+            auth,
+            userData.email,
+            userData.password
+          );
         }
         break;
 
       case LOGIN_METHOD.GOOGLE:
-        return (await signInWithPopup(auth, googleProvider)).user;
+        return await signInWithPopup(auth, googleProvider);
 
       case LOGIN_METHOD.FACEBOOK:
-        return (await signInWithPopup(auth, facebookProvider)).user;
+        return await signInWithPopup(auth, facebookProvider);
     }
   } catch (error) {
     if (error instanceof FirebaseError) {

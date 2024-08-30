@@ -10,9 +10,15 @@ export const useSignOutMutation = () => {
 
   return useMutation({
     mutationFn: signOut,
+    onMutate: () => {
+      showNotification({ status: 'loading', title: 'Please wait' });
+    },
     onSuccess: () => {
       navigate(ROUTES.SIGN_IN);
-      showNotification({ status: 'success', title: "You've logout successfully!" });
+      showNotification({
+        status: 'success',
+        title: "You've logout successfully!",
+      });
     },
   });
 };

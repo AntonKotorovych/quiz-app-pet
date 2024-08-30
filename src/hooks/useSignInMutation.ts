@@ -32,7 +32,7 @@ export const useSignInMutation = () => {
       showNotification({
         status: 'success',
         title: 'Sign In Successful!',
-        description: `Greetings ${userData?.displayName}, You have been logged in successfully.`,
+        description: `Greetings ${userData?.user.displayName}, You have been logged in successfully.`,
       });
     },
   });
