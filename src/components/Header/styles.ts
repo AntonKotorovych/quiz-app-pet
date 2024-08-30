@@ -3,7 +3,6 @@ import { chakra, Container, Flex, Text } from '@chakra-ui/react';
 export const HeaderContainer = chakra(Container, {
   baseStyle: {
     w: '100%',
-    h: '6rem',
     background: 'green.400',
     border: '2px',
     borderColor: 'gray.500',
@@ -16,8 +15,8 @@ export const HeaderContainer = chakra(Container, {
 export const NavBar = chakra(Flex, {
   baseStyle: {
     w: '95%',
-    h: '100%',
     m: 'auto',
+    p: '5px 0',
     alignItems: 'center',
   },
 });

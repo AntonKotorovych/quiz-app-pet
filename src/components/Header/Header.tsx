@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Spacer, Spinner } from '@chakra-ui/react';
+import { Button, HStack, Spacer, Spinner } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import MainLogoSVG from 'components/MainLogo/MainLogoSVG';
@@ -12,11 +12,9 @@ export default function Header() {
   return (
     <HeaderContainer as="header">
       <NavBar>
-        <Box>
-          <Link to={ROUTES.HOME} title="Go to Home Page" style={{ padding: '4rem' }}>
-            <MainLogoSVG />
-          </Link>
-        </Box>
+        <Link to={ROUTES.HOME} title="Go to Home Page">
+          <MainLogoSVG />
+        </Link>
         <Spacer />
         <HStack spacing={7}>
           <Button colorScheme="yellow">Create Quiz</Button>
