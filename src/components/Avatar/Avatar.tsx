@@ -12,9 +12,10 @@ import { useSignOutMutation } from 'hooks/useSignOutMutation';
 
 interface Props {
   title: string | null;
+  avatarImgSrc: string | null;
 }
 
-export default function Avatar({ title }: Props) {
+export default function Avatar({ title, avatarImgSrc }: Props) {
   const { mutate: signOutMutate, isPending } = useSignOutMutation();
 
   const handleSignOut = () => {
@@ -27,7 +28,7 @@ export default function Avatar({ title }: Props) {
         <ChakraAvatar
           as="button"
           size="lg"
-          src="../assets/avatars/cat.jpg"
+          src={avatarImgSrc || ''}
           userSelect="none"
           title={title || ''}
         />

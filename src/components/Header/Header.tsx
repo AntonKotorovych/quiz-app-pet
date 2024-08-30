@@ -21,7 +21,7 @@ export default function Header() {
         <HStack spacing={7}>
           <Button colorScheme="yellow">Create Quiz</Button>
           {isLoading && <Spinner size="xl" color="gray.700" thickness="4px" />}
-          {user && <Avatar title={user.displayName} />}
+          {user && <Avatar title={user.displayName} avatarImgSrc={user.photoURL} />}
           {!user && !isLoading && (
             <>
               <Link to={ROUTES.SIGN_UP} title="Register new account">
