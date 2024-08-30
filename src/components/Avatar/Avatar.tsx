@@ -27,7 +27,7 @@ export default function Avatar({ title, avatarImgSrc }: Props) {
       <PopoverTrigger>
         <ChakraAvatar
           as="button"
-          size="lg"
+          size="md"
           src={avatarImgSrc || ''}
           userSelect="none"
           title={title || ''}
