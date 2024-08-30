@@ -1,21 +1,17 @@
 import { useRef } from 'react';
-import { ToastId, useToast } from '@chakra-ui/react';
-import { TOAST_STATUS } from 'constants/enums';
+import { ToastId, useToast, UseToastOptions } from '@chakra-ui/react';
 
 export const useToastNotification = () => {
   const toast = useToast();
 
   const toastIdRef = useRef<ToastId>();
 
-  const showNotification = (
-    status: TOAST_STATUS,
-    payload: { title: string; description: string }
-  ) => {
-    if (status === TOAST_STATUS.LOADING) {
+  return ({ status, title, description }: UseToastOptions) => {
+    if (status === 'loading') {
       if (!toastIdRef.current) {
         toastIdRef.current = toast({
-          title: payload.title,
-          description: payload.description,
+          title,
+          description,
           status,
           duration: null,
           isClosable: true,
@@ -23,8 +19,8 @@ export const useToastNotification = () => {
       }
     } else if (toastIdRef.current) {
       toast.update(toastIdRef.current, {
-        title: payload.title,
-        description: payload.description,
+        title,
+        description,
         status,
         duration: 5000,
         isClosable: true,
@@ -33,6 +29,4 @@ export const useToastNotification = () => {
       toastIdRef.current = undefined;
     }
   };
-
-  return { showNotification };
 };

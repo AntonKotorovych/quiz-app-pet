@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import MainLogoSVG from 'components/MainLogo/MainLogoSVG';
 import Avatar from 'components/Avatar';
-import { useAuthListener } from 'hooks/useAuthListener';
+import { useAuth } from 'components/AuthListener/AuthListener';
 import { HeaderContainer, NavBar, StyledText } from './styles';
 
 export default function Header() {
-  const { user, isLoading } = useAuthListener();
+  const { user, isLoading } = useAuth();
 
   return (
     <HeaderContainer as="header">

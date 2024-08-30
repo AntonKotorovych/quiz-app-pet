@@ -33,7 +33,6 @@ interface FormActions {
   resetFormState: VoidFunction;
   validateFields: (formType: AUTH_TYPE) => boolean;
   getFormState: () => StateValuesType;
-  getLoginCredentials: () => LoginCredentials;
 }
 
 type FormStore = FormState & FormActions;
@@ -62,10 +61,6 @@ export const useFormStore = create<FormStore>((set, get) => ({
     set(DEFAULT_FORM_STATE);
   },
   getFormState: () => get().state,
-  getLoginCredentials: () => ({
-    email: get().state.email,
-    password: get().state.password,
-  }),
   validateFields: formType => {
     const { email, userName, password, confirmPassword } = get().state;
     const { setErrorByName } = get();
@@ -79,7 +74,7 @@ export const useFormStore = create<FormStore>((set, get) => ({
 
       if (userName.length > 15) {
         setErrorByName({
-          key: 'userName',
+          key: 'use rName',
           value: 'Username must contain no more than 15 characters',
         });
         isValid = false;

@@ -6,6 +6,6 @@ export const ButtonContainer = chakra(Flex, {
     fontSize: 'lg',
     flexDir: 'column',
     justifyContent: 'space-between',
-    gap: '3px',
+    gap: '1',
   },
 });

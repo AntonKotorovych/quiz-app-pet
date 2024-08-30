@@ -1,18 +1,15 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { Box, Button, Text, VStack } from '@chakra-ui/react';
-import { Form, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Box, Button, HStack, Icon, Text, VStack } from '@chakra-ui/react';
+import { Form, Link, useLocation } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
-import { AUTH_TYPE, LOGIN_METHOD, TOAST_STATUS } from 'constants/enums';
+import { FaFacebook, FaGoogle } from 'react-icons/fa';
+import { AUTH_TYPE, LOGIN_METHOD } from 'constants/enums';
 import { useFormStore } from 'hooks/useFormStore';
-import { ROUTES } from 'constants/routes';
 import { FORM_CONFIG } from 'constants/constants';
 import { useSignUpMutation } from 'hooks/useSignUpMutation';
 import { useSignInMutation } from 'hooks/useSignInMutation';
-import { useToastNotification } from 'hooks/useToastNotification';
-import { SignIn } from 'firebase/signIn';
 import FormElement from './FormElement';
 import { ButtonContainer } from './styles';
-import AuthServiceButtons from './AuthServiceButtons';
 
 interface Props {
   formType: AUTH_TYPE;
@@ -23,44 +20,12 @@ export default function AuthenticationForm({ formType }: Props) {
   const clearErrors = useFormStore(state => state.clearErrors);
   const resetFormState = useFormStore(state => state.resetFormState);
   const getFormState = useFormStore(state => state.getFormState);
-  const getLoginCredentials = useFormStore(state => state.getLoginCredentials);
 
-  const { mutate: signUp } = useSignUpMutation();
-  const { mutate: signIn } = useSignInMutation();
-
-  const { showNotification } = useToastNotification();
-
-  const navigate = useNavigate();
+  const { mutate: signUpMutate, isPending: isSignUpPending } = useSignUpMutation();
+  const { mutate: signInMutate, isPending: isSignInPending } = useSignInMutation();
   const { pathname } = useLocation();
 
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
-
-  const handleSignIn = ({ userData, loginMethod }: SignIn) => {
-    showNotification(TOAST_STATUS.LOADING, {
-      title: 'Signing in',
-      description: 'Please wait while we log you in...',
-    });
-
-    signIn(
-      { userData, loginMethod },
-      {
-        onError: error => {
-          showNotification(TOAST_STATUS.ERROR, {
-            title: 'Sign In Failed',
-            description: error.message,
-          });
-        },
-        onSuccess: userData => {
-          resetFormState();
-          navigate(ROUTES.HOME);
-          showNotification(TOAST_STATUS.SUCCESS, {
-            title: 'Sign In Successful!',
-            description: `Greetings ${userData?.displayName}, You have been logged in successfully.`,
-          });
-        },
-      }
-    );
-  };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -70,34 +35,13 @@ export default function AuthenticationForm({ formType }: Props) {
     if (isValid && formType === AUTH_TYPE.SIGN_UP) {
       const formState = getFormState();
 
-      showNotification(TOAST_STATUS.LOADING, {
-        title: 'Registration.',
-        description: 'Wait please...',
-      });
-
-      signUp(formState, {
-        onError: error => {
-          showNotification(TOAST_STATUS.ERROR, {
-            title: 'Unsuccess',
-            description: error.message,
-          });
-        },
-        onSuccess: () => {
-          resetFormState();
-          navigate(ROUTES.SIGN_IN);
-          showNotification(TOAST_STATUS.SUCCESS, {
-            title: 'Registration Complete!',
-            description:
-              'Your registration was successful. Please log in with your username and password.',
-          });
-        },
-      });
+      signUpMutate(formState);
     } else if (isValid && formType === AUTH_TYPE.SIGN_IN) {
-      const loginCredentials = getLoginCredentials();
+      const { email, password } = getFormState();
 
-      handleSignIn({
-        userData: loginCredentials,
-        loginMethod: LOGIN_METHOD.EMAIL_AND_PASSWORD,
+      signInMutate({
+        userData: { email, password },
+        loginMethod: LOGIN_METHOD.EMAIL_PASSWORD,
       });
     } else {
       return;
@@ -112,7 +56,7 @@ export default function AuthenticationForm({ formType }: Props) {
 
   return (
     <Form method="post" onSubmit={handleSubmit}>
-      <VStack spacing="2rem" userSelect="none">
+      <VStack spacing="8" userSelect="none">
         <Text>{FORM_CONFIG[formType].title}</Text>
         <FormElement
           type="email"
@@ -160,22 +104,52 @@ export default function AuthenticationForm({ formType }: Props) {
           >
             {FORM_CONFIG[formType].redirectLinkText}
           </ChakraLink>
-          <Button type="submit" colorScheme="green">
+          <Button
+            type="submit"
+            colorScheme="green"
+            isLoading={isSignInPending || isSignUpPending}
+            isDisabled={isSignInPending || isSignUpPending}
+          >
             {FORM_CONFIG[formType].submitText}
           </Button>
           {formType === AUTH_TYPE.SIGN_IN && (
-            <Box mt="0.5rem">
+            <Box mt="2">
               <Text textAlign="center" fontWeight="normal">
                 or
               </Text>
-              <AuthServiceButtons
-                onGoogleClick={() =>
-                  handleSignIn({ loginMethod: LOGIN_METHOD.GOOGLE })
-                }
-                onFacebookClick={() =>
-                  handleSignIn({ loginMethod: LOGIN_METHOD.FACEBOOK })
-                }
-              />
+              <Box mt="2">
+                <HStack>
+                  <Button
+                    colorScheme="blue"
+                    onClick={() =>
+                      signInMutate({ loginMethod: LOGIN_METHOD.GOOGLE })
+                    }
+                    leftIcon={<Icon as={FaGoogle} width="7" height="7" />}
+                    flex="1"
+                    boxShadow="2xl"
+                    p="6"
+                    isLoading={isSignInPending}
+                    isDisabled={isSignInPending}
+                  >
+                    Sign in with Google
+                  </Button>
+                  <Button
+                    colorScheme="blue"
+                    fontSize="sm"
+                    flex="1"
+                    boxShadow="2xl"
+                    p="6"
+                    onClick={() =>
+                      signInMutate({ loginMethod: LOGIN_METHOD.FACEBOOK })
+                    }
+                    leftIcon={<Icon as={FaFacebook} width="8" height="8" />}
+                    isLoading={isSignInPending}
+                    isDisabled={isSignInPending}
+                  >
+                    Sign in with Facebook
+                  </Button>
+                </HStack>
+              </Box>
             </Box>
           )}
         </ButtonContainer>
