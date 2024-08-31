@@ -74,7 +74,7 @@ export const useFormStore = create<FormStore>((set, get) => ({
 
       if (userName.length > 15) {
         setErrorByName({
-          key: 'use rName',
+          key: 'userName',
           value: 'Username must contain no more than 15 characters',
         });
         isValid = false;

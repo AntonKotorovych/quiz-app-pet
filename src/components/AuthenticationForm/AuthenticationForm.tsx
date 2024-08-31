@@ -50,13 +50,19 @@ export default function AuthenticationForm({ formType }: Props) {
 
   const togglePasswordVisibility = () => setIsVisiblePassword(prev => !prev);
 
+  const handleGoogleSignIn = () =>
+    signInMutate({ loginMethod: LOGIN_METHOD.GOOGLE });
+
+  const handleFacebookSignIn = () =>
+    signInMutate({ loginMethod: LOGIN_METHOD.FACEBOOK });
+
   useEffect(() => {
     resetFormState();
   }, [pathname, resetFormState]);
 
   return (
     <Form method="post" onSubmit={handleSubmit}>
-      <VStack spacing="8" userSelect="none">
+      <VStack spacing={8} userSelect="none">
         <Text>{FORM_CONFIG[formType].title}</Text>
         <FormElement
           type="email"
@@ -113,38 +119,32 @@ export default function AuthenticationForm({ formType }: Props) {
             {FORM_CONFIG[formType].submitText}
           </Button>
           {formType === AUTH_TYPE.SIGN_IN && (
-            <Box mt="2">
+            <Box mt={2}>
               <Text textAlign="center" fontWeight="normal">
                 or
               </Text>
-              <Box mt="2">
+              <Box mt={2}>
                 <HStack>
                   <Button
                     colorScheme="blue"
-                    onClick={() =>
-                      signInMutate({ loginMethod: LOGIN_METHOD.GOOGLE })
-                    }
-                    leftIcon={<Icon as={FaGoogle} width="7" height="7" />}
-                    flex="1"
+                    onClick={handleGoogleSignIn}
+                    leftIcon={<Icon as={FaGoogle} width={7} height={7} />}
+                    flex={1}
                     boxShadow="2xl"
-                    p="6"
+                    p={6}
                     isLoading={isSignInPending}
-                    isDisabled={isSignInPending}
                   >
                     Sign in with Google
                   </Button>
                   <Button
                     colorScheme="blue"
                     fontSize="sm"
-                    flex="1"
+                    flex={1}
                     boxShadow="2xl"
-                    p="6"
-                    onClick={() =>
-                      signInMutate({ loginMethod: LOGIN_METHOD.FACEBOOK })
-                    }
-                    leftIcon={<Icon as={FaFacebook} width="8" height="8" />}
+                    p={6}
+                    onClick={handleFacebookSignIn}
+                    leftIcon={<Icon as={FaFacebook} width={8} height={8} />}
                     isLoading={isSignInPending}
-                    isDisabled={isSignInPending}
                   >
                     Sign in with Facebook
                   </Button>

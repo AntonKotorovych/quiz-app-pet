@@ -16,10 +16,10 @@ interface Props {
 }
 
 export default function Avatar({ title, avatarImgSrc }: Props) {
-  const { mutate: signOutMutate, isPending } = useSignOutMutation();
+  const { mutate, isPending } = useSignOutMutation();
 
   const handleSignOut = () => {
-    if (confirm('Are you sure you want to log out?')) signOutMutate();
+    if (confirm('Are you sure you want to log out?')) mutate();
   };
 
   return (
@@ -34,7 +34,7 @@ export default function Avatar({ title, avatarImgSrc }: Props) {
         />
       </PopoverTrigger>
       <PopoverContent
-        w="44"
+        w={44}
         boxShadow="lg"
         borderColor="gray.600"
         borderRadius="none"

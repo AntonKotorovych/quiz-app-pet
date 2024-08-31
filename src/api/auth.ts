@@ -40,12 +40,10 @@ export async function signIn({ userData, loginMethod }: SignIn) {
   } catch (error) {
     if (error instanceof FirebaseError) {
       if (error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
-        return Promise.reject(
-          new Error('Incorrect email or password. Please try again.')
-        );
+        throw new Error('Incorrect email or password. Please try again.');
       }
     }
-    return Promise.reject(error);
+    throw error;
   }
 }
 
@@ -65,10 +63,10 @@ export async function signUp(formData: StateValuesType) {
   } catch (error) {
     if (error instanceof FirebaseError) {
       if (error.code === AuthErrorCodes.EMAIL_EXISTS) {
-        return Promise.reject(new Error('User with this email already exists'));
+        throw new Error('User with this email already exists');
       }
     }
-    return Promise.reject(error);
+    throw error;
   }
 }
 

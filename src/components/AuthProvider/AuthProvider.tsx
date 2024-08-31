@@ -22,7 +22,7 @@ const AuthContext = createContext<AuthContextType>(DEFAULT_AUTH_STATE);
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthListenerProvider = ({ children }: PropsWithChildren) => {
+const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,3 +42,5 @@ export const AuthListenerProvider = ({ children }: PropsWithChildren) => {
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;
