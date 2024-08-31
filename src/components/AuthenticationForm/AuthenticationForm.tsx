@@ -1,10 +1,13 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { Button, Text, VStack } from '@chakra-ui/react';
-import { Form, Link, useLocation, useNavigate } from 'react-router-dom';
-import { AUTH_TYPE } from 'constants/enums';
+import { Box, Button, HStack, Icon, Text, VStack } from '@chakra-ui/react';
+import { Form, Link, useLocation } from 'react-router-dom';
+import { Link as ChakraLink } from '@chakra-ui/react';
+import { FaFacebook, FaGoogle } from 'react-icons/fa';
+import { AUTH_TYPE, LOGIN_METHOD } from 'constants/enums';
 import { useFormStore } from 'hooks/useFormStore';
-import { ROUTES } from 'constants/routes';
 import { FORM_CONFIG } from 'constants/constants';
+import { useSignUpMutation } from 'hooks/useSignUpMutation';
+import { useSignInMutation } from 'hooks/useSignInMutation';
 import FormElement from './FormElement';
 import { ButtonContainer } from './styles';
 
@@ -16,8 +19,10 @@ export default function AuthenticationForm({ formType }: Props) {
   const validateFields = useFormStore(state => state.validateFields);
   const clearErrors = useFormStore(state => state.clearErrors);
   const resetFormState = useFormStore(state => state.resetFormState);
+  const getFormState = useFormStore(state => state.getFormState);
 
-  const navigate = useNavigate();
+  const { mutate: signUpMutate, isPending: isSignUpPending } = useSignUpMutation();
+  const { mutate: signInMutate, isPending: isSignInPending } = useSignInMutation();
   const { pathname } = useLocation();
 
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -28,11 +33,16 @@ export default function AuthenticationForm({ formType }: Props) {
     const isValid = validateFields(formType);
 
     if (isValid && formType === AUTH_TYPE.SIGN_UP) {
-      resetFormState();
-      navigate(ROUTES.SIGN_IN);
+      const formState = getFormState();
+
+      signUpMutate(formState);
     } else if (isValid && formType === AUTH_TYPE.SIGN_IN) {
-      resetFormState();
-      navigate(ROUTES.HOME);
+      const { email, password } = getFormState();
+
+      signInMutate({
+        userData: { email, password },
+        loginMethod: LOGIN_METHOD.EMAIL_PASSWORD,
+      });
     } else {
       return;
     }
@@ -40,13 +50,19 @@ export default function AuthenticationForm({ formType }: Props) {
 
   const togglePasswordVisibility = () => setIsVisiblePassword(prev => !prev);
 
+  const handleGoogleSignIn = () =>
+    signInMutate({ loginMethod: LOGIN_METHOD.GOOGLE });
+
+  const handleFacebookSignIn = () =>
+    signInMutate({ loginMethod: LOGIN_METHOD.FACEBOOK });
+
   useEffect(() => {
     resetFormState();
   }, [pathname, resetFormState]);
 
   return (
     <Form method="post" onSubmit={handleSubmit}>
-      <VStack spacing="2rem" userSelect="none">
+      <VStack spacing={8} userSelect="none">
         <Text>{FORM_CONFIG[formType].title}</Text>
         <FormElement
           type="email"
@@ -85,12 +101,57 @@ export default function AuthenticationForm({ formType }: Props) {
           />
         )}
         <ButtonContainer>
-          <Link to={FORM_CONFIG[formType].redirectRoute}>
+          <ChakraLink
+            fontWeight="normal"
+            fontSize="sm"
+            _hover={{ color: 'green.500', textDecor: 'underline' }}
+            as={Link}
+            to={FORM_CONFIG[formType].redirectRoute}
+          >
             {FORM_CONFIG[formType].redirectLinkText}
-          </Link>
-          <Button type="submit" colorScheme="green">
+          </ChakraLink>
+          <Button
+            type="submit"
+            colorScheme="green"
+            isLoading={isSignInPending || isSignUpPending}
+            isDisabled={isSignInPending || isSignUpPending}
+          >
             {FORM_CONFIG[formType].submitText}
           </Button>
+          {formType === AUTH_TYPE.SIGN_IN && (
+            <Box mt={2}>
+              <Text textAlign="center" fontWeight="normal">
+                or
+              </Text>
+              <Box mt={2}>
+                <HStack>
+                  <Button
+                    colorScheme="blue"
+                    onClick={handleGoogleSignIn}
+                    leftIcon={<Icon as={FaGoogle} width={7} height={7} />}
+                    flex={1}
+                    boxShadow="2xl"
+                    p={6}
+                    isLoading={isSignInPending}
+                  >
+                    Sign in with Google
+                  </Button>
+                  <Button
+                    colorScheme="blue"
+                    fontSize="sm"
+                    flex={1}
+                    boxShadow="2xl"
+                    p={6}
+                    onClick={handleFacebookSignIn}
+                    leftIcon={<Icon as={FaFacebook} width={8} height={8} />}
+                    isLoading={isSignInPending}
+                  >
+                    Sign in with Facebook
+                  </Button>
+                </HStack>
+              </Box>
+            </Box>
+          )}
         </ButtonContainer>
       </VStack>
     </Form>

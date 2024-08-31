@@ -53,7 +53,7 @@ export default function FormElement({
         />
         {withInputRight && (
           <InputRightElement>
-            <Button onClick={toggleVisibility}>
+            <Button onClick={toggleVisibility} bgColor="inherit">
               {type === 'password' && <ViewIcon />}
               {type === 'text' && <ViewOffIcon />}
             </Button>
