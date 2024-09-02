@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import MainLogoSVG from 'components/MainLogo/MainLogoSVG';
 import Avatar from 'components/Avatar';
-import { useAuth } from 'components/AuthProvider/AuthListener';
+import { useAuth } from 'components/AuthProvider/AuthProvider';
 import { HeaderContainer, NavBar, StyledText } from './styles';
 
 export default function Header() {
