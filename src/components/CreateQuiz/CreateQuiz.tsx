@@ -1,5 +1,5 @@
 import { Button, Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { STEP_CONFIG } from 'constants/config/stepConfig';
 import { ROUTES } from 'constants/routes';
@@ -9,28 +9,42 @@ import { CreateQuizContainer } from './styles';
 export default function CreateQuiz() {
   const { step } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const currentStep = useCreateQuizFormStore(state => state.currentStep);
   const incrementStep = useCreateQuizFormStore(state => state.incrementCurrentStep);
   const decrementStep = useCreateQuizFormStore(state => state.decrementCurrentStep);
   const setStep = useCreateQuizFormStore(state => state.setStep);
+  const clearFormData = useCreateQuizFormStore(state => state.clearFormData);
 
   const isValidStep = step && Object.keys(STEP_CONFIG).includes(step);
 
   useEffect(() => {
     if (isValidStep) {
-      setStep(Number(step));
+      setStep(+step);
     } else {
       navigate(ROUTES.HOME);
     }
-  }, [step, isValidStep, setStep, navigate]);
+  }, [step, isValidStep, setStep, navigate, clearFormData]);
 
   useEffect(() => {
     if (isValidStep) navigate(`${ROUTES.CREATE_QUIZ}/${currentStep}`);
   }, [currentStep, navigate, isValidStep]);
 
-  if (!isValidStep) return null;
+  useEffect(() => {
+    return () => {
+      clearFormData();
+    };
+  }, [clearFormData]);
 
+  if (!isValidStep) {
+    return null;
+  }
+
+  if (!location.pathname.includes(ROUTES.CREATE_QUIZ)) {
+    console.log('clearFormData');
+    clearFormData();
+  }
   return (
     <CreateQuizContainer as="section">
       <Flex p={10} flexDirection="column" h="full">

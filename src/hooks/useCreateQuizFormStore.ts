@@ -32,14 +32,13 @@ interface StepState {
   incrementCurrentStep: VoidFunction;
   decrementCurrentStep: VoidFunction;
   setStep: (step: number) => void;
-  getCurrentStep: () => number;
 }
 
 type FormStore = FormState & FormActions & StepState;
 
 export const useCreateQuizFormStore = create<FormStore>()(
   persist(
-    (set, get) => ({
+    set => ({
       ...DEFAULT_STATE_VALUES,
       clearFormData: () =>
         set({ ...DEFAULT_STATE_VALUES, currentStep: DEFAULT_STEP }),
@@ -50,7 +49,6 @@ export const useCreateQuizFormStore = create<FormStore>()(
         }));
       },
       currentStep: DEFAULT_STEP,
-      getCurrentStep: () => get().currentStep,
       incrementCurrentStep: () => {
         set(state => {
           if (state.currentStep < MAX_STEP) {
