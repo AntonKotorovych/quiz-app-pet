@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { DEFAULT_CATEGORY_ID } from 'constants/config/categoriesConfig';
+import { DEFAULT_CATEGORY_ID } from 'constants/config/createQuizStepsConfig';
 
 const DEFAULT_STATE_VALUES = {
   numberOfQuestions: '',

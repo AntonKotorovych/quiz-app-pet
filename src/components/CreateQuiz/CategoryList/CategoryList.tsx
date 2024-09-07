@@ -1,6 +1,6 @@
 import { Box, List } from '@chakra-ui/react';
-import { CATEGORIES_CONFIG } from 'constants/config/categoriesConfig';
-import CategoryItem from './CategoryItem';
+import { CREATE_QUIZ_STEPS_CONFIG } from 'constants/config/createQuizStepsConfig';
+import ListItem from '../ListItem';
 
 export default function CategoryList() {
   return (
@@ -12,14 +12,13 @@ export default function CategoryList() {
         overflow="hidden"
         p={4}
       >
-        {CATEGORIES_CONFIG.map(category => (
-          <CategoryItem
+        {CREATE_QUIZ_STEPS_CONFIG.CATEGORIES.map(category => (
+          <ListItem
             id={category.id}
             name={category.name}
             key={category.id}
             icon={category.icon}
             backgroundColor={category.backgroundColor}
-            isSelected={true}
           />
         ))}
       </List>
