@@ -14,10 +14,12 @@ export default function CategoryList() {
       >
         {CATEGORIES_CONFIG.map(category => (
           <CategoryItem
+            id={category.id}
             name={category.name}
             key={category.id}
             icon={category.icon}
             backgroundColor={category.backgroundColor}
+            isSelected={true}
           />
         ))}
       </List>

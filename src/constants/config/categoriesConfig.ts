@@ -24,9 +24,11 @@ import EntertainmentAnimeManga from '../../../assets/icons/category-icons/entert
 import EntertainmentCartoons from '../../../assets/icons/category-icons/entertainment-cartoon-and-animations.svg';
 import AnyCategory from '../../../assets/icons/category-icons/any-category.svg';
 
+export const DEFAULT_CATEGORY_ID = 1;
+
 export const CATEGORIES_CONFIG = [
   {
-    id: 1,
+    id: DEFAULT_CATEGORY_ID,
     name: 'Any Category',
     icon: AnyCategory,
     backgroundColor: {

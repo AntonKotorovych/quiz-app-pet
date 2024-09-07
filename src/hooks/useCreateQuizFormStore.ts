@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import { DEFAULT_CATEGORY_ID } from 'constants/config/categoriesConfig';
 
 const DEFAULT_STATE_VALUES = {
   numberOfQuestions: '',
-  category: '',
+  category: DEFAULT_CATEGORY_ID,
   difficulty: '',
   type: '',
   timer: '',
@@ -24,7 +25,7 @@ interface FormActions {
 
 interface FormPayload {
   key: CreateQuizFormKeys;
-  value: string;
+  value: string | number;
 }
 
 interface StepState {
