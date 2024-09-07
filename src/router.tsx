@@ -4,6 +4,7 @@ import Layout from 'components/Layout';
 import HomePage from 'pages/HomePage';
 import SignUpPage from 'pages/SignUpPage';
 import SignInPage from 'pages/SignInPage';
+import CreateQuizPage from 'pages/CreateQuizPage';
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.SIGN_IN,
         element: <SignInPage />,
+      },
+      {
+        path: `${ROUTES.CREATE_QUIZ}/:step`,
+        element: <CreateQuizPage />,
       },
     ],
   },

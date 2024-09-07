@@ -1,5 +1,5 @@
 import { Button, HStack, Spacer, Spinner } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import MainLogoSVG from 'components/MainLogo/MainLogoSVG';
 import Avatar from 'components/Avatar';
@@ -8,6 +8,7 @@ import { HeaderContainer, NavBar, StyledText } from './styles';
 
 export default function Header() {
   const { user, isLoading } = useAuth();
+  const location = useLocation();
 
   return (
     <HeaderContainer as="header">
@@ -17,7 +18,11 @@ export default function Header() {
         </Link>
         <Spacer />
         <HStack spacing={7}>
-          <Button colorScheme="yellow">Create Quiz</Button>
+          {!location.pathname.includes(ROUTES.CREATE_QUIZ) && (
+            <Link to={`${ROUTES.CREATE_QUIZ}/1`} title="Create new quiz">
+              <Button colorScheme="yellow">Create Quiz</Button>
+            </Link>
+          )}
           {isLoading && <Spinner size="xl" color="gray.700" thickness="4px" />}
           {user && <Avatar title={user.displayName} avatarImgSrc={user.photoURL} />}
           {!user && !isLoading && (

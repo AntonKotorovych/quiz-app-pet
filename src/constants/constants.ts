@@ -24,3 +24,5 @@ export const FORM_CONFIG: AuthFormConfig = {
     title: 'Sign In',
   },
 };
+
+export const MAX_QUESTION_QUANTITY = 50;

@@ -1,20 +1,26 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { API_ROUTER } from 'constants/apiRoutes';
+import { COOKIE_SETTINGS } from 'constants/cookieSettings';
 
 export default async function quizSession() {
-  const token = Cookies.get('quiz_token');
+  const currentToken = Cookies.get(COOKIE_SETTINGS.COOKIE_TOKEN_NAME);
 
-  if (!token) {
+  if (!currentToken) {
     try {
-      const response = await axios.get(
-        'https://opentdb.com/api_token.php?command=request'
-      );
+      const response = await axios.get(API_ROUTER.RETRIEVE_NEW_TOKEN);
 
-      Cookies.set('quiz_token', response.data.token, { expires: 0.25 });
+      const newToken = response.data.token;
+
+      Cookies.set(COOKIE_SETTINGS.COOKIE_TOKEN_NAME, newToken, {
+        expires: COOKIE_SETTINGS.TOKEN_EXPIRATION_TIME,
+      });
+
+      return newToken;
     } catch (error) {
       throw error;
     }
   } else {
-    return;
+    return currentToken;
   }
 }
