@@ -29,150 +29,225 @@ export const CATEGORIES_CONFIG = [
     id: 1,
     name: 'Any Category',
     icon: AnyCategory,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#f5fbe6',
+      right: '#70b7f9',
+    },
   },
   {
     id: 9,
     name: 'General Knowledge',
     icon: GeneralKnowledge,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#74ebd5',
+      right: '#80befd',
+    },
   },
   {
     id: 10,
     name: 'Entertainment: Books',
     icon: EntertainmentBooks,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#e181e1',
+      right: '#ffffff',
+    },
   },
   {
     id: 11,
     name: 'Entertainment: Film',
     icon: EntertainmentFilm,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#CAC531',
+      right: '#F3F9A7',
+    },
   },
   {
     id: 12,
     name: 'Entertainment: Music',
     icon: EntertainmentMusic,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#58b6fe',
+      right: '#baf784',
+    },
   },
   {
     id: 13,
     name: 'Entertainment: Musicals & Theatres',
     icon: EntertainmentMusicalsAndTheatres,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#7bd5ff',
+      right: '#ffc088',
+    },
   },
   {
     id: 14,
     name: 'Entertainment: Television',
     icon: EntertainmentTelevision,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#e0e0e0',
+      right: '#8bffc1',
+    },
   },
   {
     id: 15,
     name: 'Entertainment: Video Games',
     icon: EntertainmentVideoGames,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#b7baff',
+      right: '#80ceff',
+    },
   },
   {
     id: 16,
     name: 'Entertainment: Board Games',
     icon: EntertainmentBoardGames,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#989898',
+      right: '#faffd7',
+    },
   },
   {
     id: 17,
     name: 'Science & Nature',
     icon: ScienceAndNature,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#60b4fc',
+      right: '#cfccfa',
+    },
   },
   {
     id: 18,
     name: 'Science: Computers',
     icon: ScienceComputers,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#FFEFBA',
+      right: '#feecec',
+    },
   },
   {
     id: 19,
     name: 'Science: Mathematics',
     icon: ScienceMathematics,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#85b8d8',
+      right: '#ffd0d7',
+    },
   },
   {
     id: 20,
     name: 'Mythology',
     icon: Mythology,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#e07bff',
+      right: '#b99ea2',
+    },
   },
   {
     id: 21,
     name: 'Sports',
     icon: Sports,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#a9a9e7',
+      right: '#91EAE4',
+    },
   },
   {
     id: 22,
     name: 'Geography',
     icon: Geography,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#d7d7d7',
+      right: '#6895fc',
+    },
   },
   {
     id: 23,
     name: 'History',
     icon: History,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#e6e9e8',
+      right: '#9eebc7',
+    },
   },
   {
     id: 24,
     name: 'Politics',
     icon: Politics,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#a2c6ff',
+      right: '#4c8bb8',
+    },
   },
   {
     id: 25,
     name: 'Art',
     icon: Art,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#ff58d3',
+      right: '#ade1f9',
+    },
   },
   {
     id: 26,
     name: 'Celebrities',
     icon: Celebrities,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#20b92f',
+      right: '#dbff8d',
+    },
   },
   {
     id: 27,
     name: 'Animals',
     icon: Animals,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#ffffff',
+      right: '#feac39',
+    },
   },
   {
     id: 28,
     name: 'Vehicles',
     icon: Vehicles,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#e6e9e8',
+      right: '#ff7869',
+    },
   },
   {
     id: 29,
     name: 'Entertainment: Comics',
     icon: EntertainmentComics,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#868686',
+      right: '#ff9f89',
+    },
   },
   {
     id: 30,
     name: 'Science: Gadgets',
     icon: ScienceGadgets,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#fdfdfd',
+      right: '#6affb9',
+    },
   },
   {
     id: 31,
     name: 'Entertainment: Japanese Anime & Manga',
     icon: EntertainmentAnimeManga,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#dfffad',
+      right: '#49d393',
+    },
   },
   {
     id: 32,
     name: 'Entertainment: Cartoon & Animations',
     icon: EntertainmentCartoons,
-    backgroundColor: '',
+    backgroundColor: {
+      left: '#ffffff',
+      right: '#5bff71',
+    },
   },
 ];
