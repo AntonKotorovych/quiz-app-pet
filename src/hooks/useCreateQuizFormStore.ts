@@ -2,18 +2,20 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { DEFAULT_CATEGORY_ID } from 'constants/config/createQuizStepsConfig';
 
+const MIN_STEP = 1;
+const MAX_STEP = 5;
+
+export const DEFAULT_STEP = MIN_STEP;
+
+export const DEFAULT_TIMER_VALUE = 30;
+
 const DEFAULT_STATE_VALUES = {
   numberOfQuestions: '',
   category: DEFAULT_CATEGORY_ID,
   difficulty: '',
   type: '',
-  timer: '',
+  timer: DEFAULT_TIMER_VALUE,
 };
-
-const MIN_STEP = 1;
-const MAX_STEP = 5;
-
-export const DEFAULT_STEP = MIN_STEP;
 
 type FormState = typeof DEFAULT_STATE_VALUES;
 type CreateQuizFormKeys = keyof FormState;
