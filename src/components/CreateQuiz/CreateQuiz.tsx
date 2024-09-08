@@ -16,8 +16,13 @@ export default function CreateQuiz() {
   const decrementStep = useCreateQuizFormStore(state => state.decrementCurrentStep);
   const setStep = useCreateQuizFormStore(state => state.setStep);
   const clearFormData = useCreateQuizFormStore(state => state.clearFormData);
+  const clearField = useCreateQuizFormStore(state => state.clearField);
 
   const isValidStep = step && Object.keys(STEP_CONFIG).includes(step);
+
+  const handleClear = () => {
+    clearField(STEP_CONFIG[String(currentStep)].name);
+  };
 
   useEffect(() => {
     if (isValidStep) {
@@ -42,9 +47,9 @@ export default function CreateQuiz() {
   }
 
   if (!location.pathname.includes(ROUTES.CREATE_QUIZ)) {
-    console.log('clearFormData');
     clearFormData();
   }
+
   return (
     <CreateQuizContainer as="section">
       <Flex p={10} flexDirection="column" h="full">
@@ -69,7 +74,7 @@ export default function CreateQuiz() {
           pt={6}
           flex={1}
         >
-          <Button colorScheme="yellow" size="lg" w={36}>
+          <Button colorScheme="yellow" size="lg" w={36} onClick={handleClear}>
             Clear
           </Button>
           {step !== '1' && (

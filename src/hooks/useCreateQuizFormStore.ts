@@ -18,15 +18,16 @@ const DEFAULT_STATE_VALUES = {
 };
 
 type FormState = typeof DEFAULT_STATE_VALUES;
-type CreateQuizFormKeys = keyof FormState;
+export type QuizFormKeys = keyof FormState;
 
 interface FormActions {
   clearFormData: VoidFunction;
+  clearField: (key: QuizFormKeys) => void;
   setFormElementValue: (payload: FormPayload) => void;
 }
 
 interface FormPayload {
-  key: CreateQuizFormKeys;
+  key: QuizFormKeys;
   value: string | number;
 }
 
@@ -45,6 +46,11 @@ export const useCreateQuizFormStore = create<FormStore>()(
       ...DEFAULT_STATE_VALUES,
       clearFormData: () =>
         set({ ...DEFAULT_STATE_VALUES, currentStep: DEFAULT_STEP }),
+      clearField: (key: QuizFormKeys) =>
+        set(state => ({
+          ...state,
+          [key]: DEFAULT_STATE_VALUES[key],
+        })),
       setFormElementValue: payload => {
         set(state => ({
           ...state,
