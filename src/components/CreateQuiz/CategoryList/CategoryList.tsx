@@ -14,6 +14,7 @@ export default function CategoryList() {
       >
         {CREATE_QUIZ_STEPS_CONFIG.CATEGORIES.map(category => (
           <ListItem
+            keyType="category"
             id={category.id}
             name={category.name}
             key={category.id}

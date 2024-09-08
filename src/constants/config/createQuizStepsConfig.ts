@@ -38,6 +38,37 @@ import AnyType from '../../../assets/icons/quiz-types/any-type.svg';
 import MultipleChoice from '../../../assets/icons/quiz-types/multiple-choices.svg';
 import TrueFalse from '../../../assets/icons/quiz-types/true-false.svg';
 
+type DifficultyLevelId = 'easy' | 'medium' | 'hard';
+type QuizTypeId = 'anyType' | 'multiple' | 'boolean';
+
+interface BackgroundColor {
+  left: string;
+  right: string;
+}
+
+interface Category {
+  id: number;
+  name: string;
+  icon: string;
+  backgroundColor: BackgroundColor;
+}
+
+interface DifficultyLevel {
+  id: DifficultyLevelId;
+  name: string;
+  icon: string;
+  backgroundColor: BackgroundColor;
+}
+
+interface QuizType {
+  id: QuizTypeId;
+  name: string;
+  icon: string;
+  backgroundColor: BackgroundColor;
+}
+
+export type ElementId = number | DifficultyLevelId | QuizTypeId;
+
 export const DEFAULT_CATEGORY_ID = 1;
 
 export const CREATE_QUIZ_STEPS_CONFIG = {
@@ -267,10 +298,11 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
         right: '#5bff71',
       },
     },
-  ],
+  ] as Category[],
+
   DIFFICULTY_LEVEL: [
     {
-      id: 1,
+      id: 'easy',
       name: 'Easy',
       icon: EasyLevel,
       backgroundColor: {
@@ -279,7 +311,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       },
     },
     {
-      id: 2,
+      id: 'medium',
       name: 'Medium',
       icon: MediumLevel,
       backgroundColor: {
@@ -288,7 +320,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       },
     },
     {
-      id: 3,
+      id: 'hard',
       name: 'Hard',
       icon: HardLevel,
       backgroundColor: {
@@ -296,10 +328,10 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
         right: '#f84141',
       },
     },
-  ],
+  ] as DifficultyLevel[],
   QUIZ_TYPE: [
     {
-      id: 4,
+      id: 'anyType',
       name: 'Any type',
       icon: AnyType,
       backgroundColor: {
@@ -308,7 +340,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       },
     },
     {
-      id: 5,
+      id: 'multiple',
       name: 'Multiple choices',
       icon: MultipleChoice,
       backgroundColor: {
@@ -317,7 +349,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       },
     },
     {
-      id: 6,
+      id: 'boolean',
       name: 'True/False',
       icon: TrueFalse,
       backgroundColor: {
@@ -325,5 +357,5 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
         right: '#a7a7a7',
       },
     },
-  ],
-};
+  ] as QuizType[],
+} as const;

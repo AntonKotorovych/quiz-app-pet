@@ -12,6 +12,7 @@ export default function DifficultyList() {
       >
         {CREATE_QUIZ_STEPS_CONFIG.DIFFICULTY_LEVEL.map(difficultyLevel => (
           <ListItem
+            keyType="difficulty"
             id={difficultyLevel.id}
             name={difficultyLevel.name}
             key={difficultyLevel.id}

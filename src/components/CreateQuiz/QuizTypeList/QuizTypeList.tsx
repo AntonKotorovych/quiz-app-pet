@@ -12,6 +12,7 @@ export default function QuizTypeList() {
       >
         {CREATE_QUIZ_STEPS_CONFIG.QUIZ_TYPE.map(quizType => (
           <ListItem
+            keyType="type"
             id={quizType.id}
             name={quizType.name}
             key={quizType.id}

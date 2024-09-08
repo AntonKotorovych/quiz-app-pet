@@ -5,26 +5,34 @@ import {
   ListItem as ChakraListItem,
   Text,
 } from '@chakra-ui/react';
-import { useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
+import { ElementId } from 'constants/config/createQuizStepsConfig';
+import { QuizFormKeys, useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 
 interface Props {
-  id: number;
+  id: ElementId;
   name: string;
   icon: string;
   backgroundColor: { left: string; right: string };
+  keyType: QuizFormKeys;
 }
 
-export default function ListItem({ id, name, icon, backgroundColor }: Props) {
+export default function ListItem({
+  id,
+  name,
+  icon,
+  backgroundColor,
+  keyType,
+}: Props) {
   const setFormElementValue = useCreateQuizFormStore(
     state => state.setFormElementValue
   );
-  const selectedCategory = useCreateQuizFormStore(state => state.category);
+  const currentElement = useCreateQuizFormStore(state => state[keyType]);
 
-  const handleCategoryClick = () => {
-    setFormElementValue({ key: 'category', value: id });
+  const handleElementClick = () => {
+    setFormElementValue({ key: keyType, value: id });
   };
 
-  const isSelected = selectedCategory === id;
+  const isSelected = currentElement === id;
 
   return (
     <ChakraListItem
@@ -37,11 +45,11 @@ export default function ListItem({ id, name, icon, backgroundColor }: Props) {
       border="2px solid"
       transform={isSelected ? 'scale(1.1)' : ''}
       borderColor={isSelected ? 'yellow.400' : 'gray.600'}
-      boxShadow={isSelected ? 'dark-lg' : ''}
+      boxShadow={isSelected ? 'lg' : ''}
       overflow="hidden"
       outline={isSelected ? '4px solid' : ''}
       outlineColor={isSelected ? 'orange.300' : ''}
-      onClick={handleCategoryClick}
+      onClick={handleElementClick}
     >
       <Card
         direction="row"
