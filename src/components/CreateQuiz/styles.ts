@@ -2,7 +2,7 @@ import { chakra, Container } from '@chakra-ui/react';
 
 export const CreateQuizContainer = chakra(Container, {
   baseStyle: {
-    w: '900px',
+    minW: '900px',
     h: 700,
     bgColor: 'whiteAlpha.500',
     mt: 8,
