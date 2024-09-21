@@ -9,33 +9,33 @@ export const STEP_CONFIG: {
   [key: string]: {
     name: QuizFormKeys;
     title: string;
-    component?: JSX.Element;
+    component: () => JSX.Element;
   };
 } = {
   '1': {
     name: 'numberOfQuestions',
     title: 'Number of Questions',
-    component: <NumberOfQuestionsSelect />,
+    component: NumberOfQuestionsSelect,
   },
   '2': {
     name: 'category',
     title: 'Select Category',
-    component: <CategoryList />,
+    component: CategoryList,
   },
   '3': {
     name: 'difficulty',
     title: 'Select Difficulty',
-    component: <DifficultyList />,
+    component: DifficultyList,
   },
   '4': {
     name: 'type',
     title: 'Select Type',
-    component: <QuizTypeList />,
+    component: QuizTypeList,
   },
   '5': {
     name: 'timer',
     title: 'Timer for Each Question',
-    component: <TimerInput />,
+    component: TimerInput,
   },
 };
 

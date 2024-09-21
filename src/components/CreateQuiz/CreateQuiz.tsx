@@ -1,12 +1,13 @@
-import { Button, Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
+import { Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { FIRST_STEP, LAST_STEP, STEP_CONFIG } from 'constants/config/stepConfig';
+import QuizButton from 'components/QuizButton';
 import { ROUTES } from 'constants/routes';
 import { useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 import { CreateQuizContainer } from './styles';
 
-enum Directions {
+enum StepDirections {
   NEXT = 'next',
   BACK = 'back',
 }
@@ -24,9 +25,9 @@ export default function CreateQuiz() {
     if (step) clearField(STEP_CONFIG[step].name);
   };
 
-  const handleNavigate = (direction: Directions) => {
+  const handleNavigate = (direction: StepDirections) => {
     if (isValidStep) {
-      const newStep = direction === Directions.NEXT ? +step + 1 : +step - 1;
+      const newStep = direction === StepDirections.NEXT ? +step + 1 : +step - 1;
 
       navigate(`${ROUTES.CREATE_QUIZ}/${newStep}`);
     }
@@ -41,6 +42,8 @@ export default function CreateQuiz() {
   if (!isValidStep) {
     return null;
   }
+
+  const QuizStep = STEP_CONFIG[step]?.component;
 
   return (
     <CreateQuizContainer as="section">
@@ -57,7 +60,7 @@ export default function CreateQuiz() {
           flex={6}
           justifyContent="center"
         >
-          {STEP_CONFIG[step].component}
+          {<QuizStep />}
         </Flex>
         <HStack
           borderTop="2px"
@@ -66,33 +69,21 @@ export default function CreateQuiz() {
           pt={6}
           flex={1}
         >
-          <Button colorScheme="yellow" size="lg" minW={36} onClick={handleClear}>
+          <QuizButton onClick={handleClear} colorScheme="yellow">
             Clear
-          </Button>
+          </QuizButton>
           {step !== FIRST_STEP && (
-            <Button
-              colorScheme="green"
-              size="lg"
-              minW={36}
-              onClick={() => handleNavigate(Directions.BACK)}
-            >
+            <QuizButton onClick={() => handleNavigate(StepDirections.BACK)}>
               Back
-            </Button>
+            </QuizButton>
           )}
           <Spacer />
           {step !== LAST_STEP && (
-            <Button
-              colorScheme="green"
-              size="lg"
-              minW={36}
-              onClick={() => handleNavigate(Directions.NEXT)}
-            >
+            <QuizButton onClick={() => handleNavigate(StepDirections.NEXT)}>
               Next
-            </Button>
+            </QuizButton>
           )}
-          <Button colorScheme="yellow" size="lg" minW={36}>
-            Finish
-          </Button>
+          <QuizButton colorScheme="yellow">Finish</QuizButton>
         </HStack>
       </Flex>
     </CreateQuizContainer>
