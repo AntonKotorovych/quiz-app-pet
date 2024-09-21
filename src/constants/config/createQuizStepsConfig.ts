@@ -1,42 +1,4 @@
-// Category icons
-
-import GeneralKnowledge from '../../../assets/icons/categories/general-knowledge.svg';
-import EntertainmentBooks from '../../../assets/icons/categories/entertainment-books.svg';
-import EntertainmentFilm from '../../../assets/icons/categories/entertainment-film.svg';
-import EntertainmentMusic from '../../../assets/icons/categories/entertainment-music.svg';
-import EntertainmentMusicalsAndTheatres from '../../../assets/icons/categories/entertainment-musicals&theatres.svg';
-import EntertainmentTelevision from '../../../assets/icons/categories/entertainment-television.svg';
-import EntertainmentVideoGames from '../../../assets/icons/categories/entertainment-video-games.svg';
-import EntertainmentBoardGames from '../../../assets/icons/categories/entertainment-board-games.svg';
-import ScienceAndNature from '../../../assets/icons/categories/science-and-nature.svg';
-import ScienceComputers from '../../../assets/icons/categories/science-computers.svg';
-import ScienceMathematics from '../../../assets/icons/categories/science-mathematics.svg';
-import Mythology from '../../../assets/icons/categories/mythology.svg';
-import Sports from '../../../assets/icons/categories/sports.svg';
-import Geography from '../../../assets/icons/categories/geography.svg';
-import History from '../../../assets/icons/categories/history.svg';
-import Politics from '../../../assets/icons/categories/politics.svg';
-import Art from '../../../assets/icons/categories/art.svg';
-import Celebrities from '../../../assets/icons/categories/celebrities.svg';
-import Animals from '../../../assets/icons/categories/animals.svg';
-import Vehicles from '../../../assets/icons/categories/vehicles.svg';
-import EntertainmentComics from '../../../assets/icons/categories/entertainment-comics.svg';
-import ScienceGadgets from '../../../assets/icons/categories/science-gadgets.svg';
-import EntertainmentAnimeManga from '../../../assets/icons/categories/entertainment-japanese-anime-and-manga.svg';
-import EntertainmentCartoons from '../../../assets/icons/categories/entertainment-cartoon-and-animations.svg';
-import AnyCategory from '../../../assets/icons/categories/any-category.svg';
-
-// Difficulty level icons
-
-import EasyLevel from '../../../assets/icons/difficulty-levels/easy-level.svg';
-import MediumLevel from '../../../assets/icons/difficulty-levels/medium-level.svg';
-import HardLevel from '../../../assets/icons/difficulty-levels/hard-level.svg';
-
-// Quiz-types icons
-
-import AnyType from '../../../assets/icons/quiz-types/any-type.svg';
-import MultipleChoice from '../../../assets/icons/quiz-types/multiple-choices.svg';
-import TrueFalse from '../../../assets/icons/quiz-types/true-false.svg';
+import { theme } from 'styles/theme';
 
 type DifficultyLevelId = 'easy' | 'medium' | 'hard';
 type QuizTypeId = 'anyType' | 'multiple' | 'boolean';
@@ -47,10 +9,12 @@ interface BackgroundColor {
 }
 
 interface Category {
-  id: number;
-  name: string;
   icon: string;
   backgroundColor: BackgroundColor;
+}
+
+interface CategoryConfig {
+  [key: number]: Category;
 }
 
 interface DifficultyLevel {
@@ -69,242 +33,196 @@ interface QuizType {
 
 export type ElementId = number | DifficultyLevelId | QuizTypeId;
 
-export const DEFAULT_CATEGORY_ID = 1;
+export const DEFAULT_CATEGORY_ID = -1;
+
+const createIconPath = (path: string) => `../../../assets/icons/${path}.svg`;
+
+const { colors } = theme;
 
 export const CREATE_QUIZ_STEPS_CONFIG = {
-  CATEGORIES: [
-    {
-      id: DEFAULT_CATEGORY_ID,
-      name: 'Any Category',
-      icon: AnyCategory,
+  CATEGORIES: {
+    [DEFAULT_CATEGORY_ID]: {
+      icon: createIconPath('categories/any-category'),
       backgroundColor: {
-        left: '#f5fbe6',
-        right: '#70b7f9',
+        left: colors.gray[50],
+        right: colors.blue[300],
       },
     },
-    {
-      id: 9,
-      name: 'General Knowledge',
-      icon: GeneralKnowledge,
+    9: {
+      icon: createIconPath('categories/general-knowledge'),
       backgroundColor: {
-        left: '#74ebd5',
-        right: '#80befd',
+        left: colors.teal[300],
+        right: colors.blue[300],
       },
     },
-    {
-      id: 10,
-      name: 'Entertainment: Books',
-      icon: EntertainmentBooks,
+    10: {
+      icon: createIconPath('categories/entertainment-books'),
       backgroundColor: {
-        left: '#e181e1',
-        right: '#ffffff',
+        left: colors.pink[400],
+        right: colors.white,
       },
     },
-    {
-      id: 11,
-      name: 'Entertainment: Film',
-      icon: EntertainmentFilm,
+    11: {
+      icon: createIconPath('categories/entertainment-film'),
       backgroundColor: {
-        left: '#CAC531',
-        right: '#F3F9A7',
+        left: colors.yellow[400],
+        right: colors.yellow[100],
       },
     },
-    {
-      id: 12,
-      name: 'Entertainment: Music',
-      icon: EntertainmentMusic,
+    12: {
+      icon: createIconPath('categories/entertainment-music'),
       backgroundColor: {
-        left: '#58b6fe',
-        right: '#baf784',
+        left: colors.blue[300],
+        right: colors.green[200],
       },
     },
-    {
-      id: 13,
-      name: 'Entertainment: Musicals & Theatres',
-      icon: EntertainmentMusicalsAndTheatres,
+    13: {
+      icon: createIconPath('categories/entertainment-musicals&theatres'),
       backgroundColor: {
-        left: '#7bd5ff',
-        right: '#ffc088',
+        left: colors.blue[200],
+        right: colors.orange[200],
       },
     },
-    {
-      id: 14,
-      name: 'Entertainment: Television',
-      icon: EntertainmentTelevision,
+    14: {
+      icon: createIconPath('categories/entertainment-television'),
       backgroundColor: {
-        left: '#e0e0e0',
-        right: '#8bffc1',
+        left: colors.red[100],
+        right: colors.green[200],
       },
     },
-    {
-      id: 15,
-      name: 'Entertainment: Video Games',
-      icon: EntertainmentVideoGames,
+    15: {
+      icon: createIconPath('categories/entertainment-video-games'),
       backgroundColor: {
-        left: '#b7baff',
-        right: '#80ceff',
+        left: colors.purple[200],
+        right: colors.cyan[200],
       },
     },
-    {
-      id: 16,
-      name: 'Entertainment: Board Games',
-      icon: EntertainmentBoardGames,
+    16: {
+      icon: createIconPath('categories/entertainment-board-games'),
       backgroundColor: {
-        left: '#989898',
-        right: '#faffd7',
+        left: colors.gray[500],
+        right: colors.yellow[100],
       },
     },
-    {
-      id: 17,
-      name: 'Science & Nature',
-      icon: ScienceAndNature,
+    17: {
+      icon: createIconPath('categories/science-and-nature'),
       backgroundColor: {
-        left: '#60b4fc',
-        right: '#cfccfa',
+        left: colors.blue[300],
+        right: colors.purple[200],
       },
     },
-    {
-      id: 18,
-      name: 'Science: Computers',
-      icon: ScienceComputers,
+    18: {
+      icon: createIconPath('categories/science-computers'),
       backgroundColor: {
-        left: '#FFEFBA',
-        right: '#feecec',
+        left: colors.yellow[100],
+        right: colors.red[100],
       },
     },
-    {
-      id: 19,
-      name: 'Science: Mathematics',
-      icon: ScienceMathematics,
+    19: {
+      icon: createIconPath('categories/science-mathematics'),
       backgroundColor: {
-        left: '#85b8d8',
-        right: '#ffd0d7',
+        left: colors.blue[200],
+        right: colors.pink[200],
       },
     },
-    {
-      id: 20,
-      name: 'Mythology',
-      icon: Mythology,
+    20: {
+      icon: createIconPath('categories/mythology'),
       backgroundColor: {
-        left: '#e07bff',
-        right: '#b99ea2',
+        left: colors.purple[300],
+        right: colors.pink[100],
       },
     },
-    {
-      id: 21,
-      name: 'Sports',
-      icon: Sports,
+    21: {
+      icon: createIconPath('categories/sports'),
       backgroundColor: {
-        left: '#a9a9e7',
-        right: '#91EAE4',
+        left: colors.purple[200],
+        right: colors.cyan[200],
       },
     },
-    {
-      id: 22,
-      name: 'Geography',
-      icon: Geography,
+    22: {
+      icon: createIconPath('categories/geography'),
       backgroundColor: {
-        left: '#d7d7d7',
-        right: '#6895fc',
+        left: colors.pink[100],
+        right: colors.blue[400],
       },
     },
-    {
-      id: 23,
-      name: 'History',
-      icon: History,
+    23: {
+      icon: createIconPath('categories/history'),
       backgroundColor: {
-        left: '#e6e9e8',
-        right: '#9eebc7',
+        left: colors.pink[50],
+        right: colors.green[200],
       },
     },
-    {
-      id: 24,
-      name: 'Politics',
-      icon: Politics,
+    24: {
+      icon: createIconPath('categories/politics'),
       backgroundColor: {
-        left: '#a2c6ff',
-        right: '#4c8bb8',
+        left: colors.blue[200],
+        right: colors.blue[600],
       },
     },
-    {
-      id: 25,
-      name: 'Art',
-      icon: Art,
+    25: {
+      icon: createIconPath('categories/art'),
       backgroundColor: {
-        left: '#ff58d3',
-        right: '#ade1f9',
+        left: colors.pink[400],
+        right: colors.cyan[200],
       },
     },
-    {
-      id: 26,
-      name: 'Celebrities',
-      icon: Celebrities,
+    26: {
+      icon: createIconPath('categories/celebrities'),
       backgroundColor: {
-        left: '#20b92f',
-        right: '#dbff8d',
+        left: colors.green[400],
+        right: colors.yellow[200],
       },
     },
-    {
-      id: 27,
-      name: 'Animals',
-      icon: Animals,
+    27: {
+      icon: createIconPath('categories/animals'),
       backgroundColor: {
-        left: '#ffffff',
-        right: '#feac39',
+        left: colors.white,
+        right: colors.yellow[400],
       },
     },
-    {
-      id: 28,
-      name: 'Vehicles',
-      icon: Vehicles,
+    28: {
+      icon: createIconPath('categories/vehicles'),
       backgroundColor: {
-        left: '#e6e9e8',
-        right: '#ff7869',
+        left: colors.gray[100],
+        right: colors.red[300],
       },
     },
-    {
-      id: 29,
-      name: 'Entertainment: Comics',
-      icon: EntertainmentComics,
+    29: {
+      icon: createIconPath('categories/entertainment-comics'),
       backgroundColor: {
-        left: '#868686',
-        right: '#ff9f89',
+        left: colors.gray[600],
+        right: colors.red[300],
       },
     },
-    {
-      id: 30,
-      name: 'Science: Gadgets',
-      icon: ScienceGadgets,
+    30: {
+      icon: createIconPath('categories/science-gadgets'),
       backgroundColor: {
-        left: '#fdfdfd',
-        right: '#6affb9',
+        left: colors.gray[50],
+        right: colors.green[200],
       },
     },
-    {
-      id: 31,
-      name: 'Entertainment: Japanese Anime & Manga',
-      icon: EntertainmentAnimeManga,
+    31: {
+      icon: createIconPath('categories/entertainment-japanese-anime-and-manga'),
       backgroundColor: {
-        left: '#dfffad',
-        right: '#49d393',
+        left: colors.yellow[200],
+        right: colors.green[300],
       },
     },
-    {
-      id: 32,
-      name: 'Entertainment: Cartoon & Animations',
-      icon: EntertainmentCartoons,
+    32: {
+      icon: createIconPath('categories/entertainment-cartoon-and-animations'),
       backgroundColor: {
-        left: '#ffffff',
-        right: '#5bff71',
+        left: colors.white,
+        right: colors.green[300],
       },
     },
-  ] as Category[],
+  } as CategoryConfig,
 
   DIFFICULTY_LEVEL: [
     {
       id: 'easy',
       name: 'Easy',
-      icon: EasyLevel,
+      icon: createIconPath('difficulty-levels/easy-level'),
       backgroundColor: {
         left: '#cdf3ff',
         right: '#43b7ff',
@@ -313,7 +231,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
     {
       id: 'medium',
       name: 'Medium',
-      icon: MediumLevel,
+      icon: createIconPath('difficulty-levels/medium-level'),
       backgroundColor: {
         left: '#a2fd62',
         right: '#f3ff4c',
@@ -322,7 +240,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
     {
       id: 'hard',
       name: 'Hard',
-      icon: HardLevel,
+      icon: createIconPath('difficulty-levels/hard-level'),
       backgroundColor: {
         left: '#ffc2c2',
         right: '#f84141',
@@ -333,7 +251,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
     {
       id: 'anyType',
       name: 'Any type',
-      icon: AnyType,
+      icon: createIconPath('quiz-types/any-type'),
       backgroundColor: {
         left: '#5ffaff',
         right: '#c7e3ff',
@@ -342,7 +260,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
     {
       id: 'multiple',
       name: 'Multiple choices',
-      icon: MultipleChoice,
+      icon: createIconPath('quiz-types/multiple-choices'),
       backgroundColor: {
         left: '#fff75c',
         right: '#7bfc51',
@@ -351,7 +269,7 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
     {
       id: 'boolean',
       name: 'True/False',
-      icon: TrueFalse,
+      icon: createIconPath('quiz-types/true-false'),
       backgroundColor: {
         left: '#ffffff',
         right: '#a7a7a7',

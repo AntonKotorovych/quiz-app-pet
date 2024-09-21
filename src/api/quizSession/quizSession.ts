@@ -1,14 +1,18 @@
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import { API_ROUTER } from 'constants/apiRoutes';
 import { COOKIE_SETTINGS } from 'constants/cookieSettings';
+import instance from 'libs/axios';
 
 export default async function quizSession() {
-  const currentToken = Cookies.get(COOKIE_SETTINGS.COOKIE_TOKEN_NAME);
+  try {
+    const currentToken = Cookies.get(COOKIE_SETTINGS.COOKIE_TOKEN_NAME);
 
-  if (!currentToken) {
-    try {
-      const response = await axios.get(API_ROUTER.RETRIEVE_NEW_TOKEN);
+    if (!currentToken) {
+      const response = await instance.get(API_ROUTER.TOKEN, {
+        params: {
+          command: 'request',
+        },
+      });
 
       const newToken = response.data.token;
 
@@ -17,10 +21,10 @@ export default async function quizSession() {
       });
 
       return newToken;
-    } catch (error) {
-      throw error;
     }
-  } else {
+
     return currentToken;
+  } catch (error) {
+    throw error;
   }
 }

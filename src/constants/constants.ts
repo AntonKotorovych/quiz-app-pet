@@ -26,3 +26,5 @@ export const FORM_CONFIG: AuthFormConfig = {
 };
 
 export const MAX_QUESTION_QUANTITY = 50;
+
+export const CATEGORIES_FROM_OPENTDB_QUERY_KEY = 'categories';

@@ -1,7 +1,7 @@
 import { Button, Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { STEP_CONFIG } from 'constants/config/stepConfig';
+import { FIRST_STEP, LAST_STEP, STEP_CONFIG } from 'constants/config/stepConfig';
 import { ROUTES } from 'constants/routes';
 import { useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 import { CreateQuizContainer } from './styles';
@@ -18,7 +18,7 @@ export default function CreateQuiz() {
   const clearFormData = useCreateQuizFormStore(state => state.clearFormData);
   const clearField = useCreateQuizFormStore(state => state.clearField);
 
-  const isValidStep = step && Object.keys(STEP_CONFIG).includes(step);
+  const isValidStep = !!step && Object.keys(STEP_CONFIG).includes(step);
 
   const handleClear = () => {
     clearField(STEP_CONFIG[String(currentStep)].name);
@@ -68,27 +68,27 @@ export default function CreateQuiz() {
           {STEP_CONFIG[step].component}
         </Flex>
         <HStack
-          borderTop="5px black solid"
+          borderTop="2px"
           justifyContent="space-between"
           spacing={10}
           pt={6}
           flex={1}
         >
-          <Button colorScheme="yellow" size="lg" w={36} onClick={handleClear}>
+          <Button colorScheme="yellow" size="lg" minW={36} onClick={handleClear}>
             Clear
           </Button>
-          {step !== '1' && (
-            <Button colorScheme="green" size="lg" w={36} onClick={decrementStep}>
+          {step !== FIRST_STEP && (
+            <Button colorScheme="green" size="lg" minW={36} onClick={decrementStep}>
               Back
             </Button>
           )}
           <Spacer />
-          {step !== '5' && (
-            <Button colorScheme="green" size="lg" w={36} onClick={incrementStep}>
+          {step !== LAST_STEP && (
+            <Button colorScheme="green" size="lg" minW={36} onClick={incrementStep}>
               Next
             </Button>
           )}
-          <Button colorScheme="yellow" size="lg" w={36}>
+          <Button colorScheme="yellow" size="lg" minW={36}>
             Finish
           </Button>
         </HStack>

@@ -42,7 +42,7 @@ export default function ListItem({
       cursor="pointer"
       userSelect="none"
       borderRadius="xl"
-      border="2px solid"
+      border="2px"
       transform={isSelected ? 'scale(1.1)' : ''}
       borderColor={isSelected ? 'yellow.400' : 'gray.600'}
       boxShadow={isSelected ? 'lg' : ''}

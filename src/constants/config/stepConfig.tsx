@@ -38,3 +38,8 @@ export const STEP_CONFIG: {
     component: <TimerInput />,
   },
 };
+
+const STEP_KEYS = Object.keys(STEP_CONFIG);
+
+export const FIRST_STEP = STEP_KEYS[0];
+export const LAST_STEP = STEP_KEYS[length - 1];
