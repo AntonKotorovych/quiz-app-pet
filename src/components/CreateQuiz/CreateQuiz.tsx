@@ -1,5 +1,5 @@
 import { Button, Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { FIRST_STEP, LAST_STEP, STEP_CONFIG } from 'constants/config/stepConfig';
 import { ROUTES } from 'constants/routes';
@@ -9,32 +9,27 @@ import { CreateQuizContainer } from './styles';
 export default function CreateQuiz() {
   const { step } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const currentStep = useCreateQuizFormStore(state => state.currentStep);
-  const incrementStep = useCreateQuizFormStore(state => state.incrementCurrentStep);
-  const decrementStep = useCreateQuizFormStore(state => state.decrementCurrentStep);
-  const setStep = useCreateQuizFormStore(state => state.setStep);
   const clearFormData = useCreateQuizFormStore(state => state.clearFormData);
   const clearField = useCreateQuizFormStore(state => state.clearField);
 
   const isValidStep = !!step && Object.keys(STEP_CONFIG).includes(step);
 
   const handleClear = () => {
-    clearField(STEP_CONFIG[String(currentStep)].name);
+    if (step) clearField(STEP_CONFIG[step].name);
   };
 
-  useEffect(() => {
+  const handleClickNext = () => {
     if (isValidStep) {
-      setStep(+step);
-    } else {
-      navigate(ROUTES.HOME);
+      navigate(`${ROUTES.CREATE_QUIZ}/${+step + 1}`);
     }
-  }, [step, isValidStep, setStep, navigate, clearFormData]);
+  };
 
-  useEffect(() => {
-    if (isValidStep) navigate(`${ROUTES.CREATE_QUIZ}/${currentStep}`);
-  }, [currentStep, navigate, isValidStep]);
+  const handleClickBack = () => {
+    if (isValidStep) {
+      navigate(`${ROUTES.CREATE_QUIZ}/${+step - 1}`);
+    }
+  };
 
   useEffect(() => {
     return () => {
@@ -44,10 +39,6 @@ export default function CreateQuiz() {
 
   if (!isValidStep) {
     return null;
-  }
-
-  if (!location.pathname.includes(ROUTES.CREATE_QUIZ)) {
-    clearFormData();
   }
 
   return (
@@ -78,13 +69,23 @@ export default function CreateQuiz() {
             Clear
           </Button>
           {step !== FIRST_STEP && (
-            <Button colorScheme="green" size="lg" minW={36} onClick={decrementStep}>
+            <Button
+              colorScheme="green"
+              size="lg"
+              minW={36}
+              onClick={handleClickBack}
+            >
               Back
             </Button>
           )}
           <Spacer />
           {step !== LAST_STEP && (
-            <Button colorScheme="green" size="lg" minW={36} onClick={incrementStep}>
+            <Button
+              colorScheme="green"
+              size="lg"
+              minW={36}
+              onClick={handleClickNext}
+            >
               Next
             </Button>
           )}

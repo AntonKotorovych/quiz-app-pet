@@ -21,7 +21,6 @@ const ANY_CATEGORY_ITEM = (
 export default function CategoryList() {
   const { data, isSuccess, isLoading } = useFetchCategoriesQuery();
 
-  console.log(data);
   return (
     <Box overflowY="scroll" height="350px" width="full">
       <List
