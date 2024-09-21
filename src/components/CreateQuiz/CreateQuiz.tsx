@@ -6,6 +6,11 @@ import { ROUTES } from 'constants/routes';
 import { useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 import { CreateQuizContainer } from './styles';
 
+enum Directions {
+  NEXT = 'next',
+  BACK = 'back',
+}
+
 export default function CreateQuiz() {
   const { step } = useParams();
   const navigate = useNavigate();
@@ -19,15 +24,11 @@ export default function CreateQuiz() {
     if (step) clearField(STEP_CONFIG[step].name);
   };
 
-  const handleClickNext = () => {
+  const handleNavigate = (direction: Directions) => {
     if (isValidStep) {
-      navigate(`${ROUTES.CREATE_QUIZ}/${+step + 1}`);
-    }
-  };
+      const newStep = direction === Directions.NEXT ? +step + 1 : +step - 1;
 
-  const handleClickBack = () => {
-    if (isValidStep) {
-      navigate(`${ROUTES.CREATE_QUIZ}/${+step - 1}`);
+      navigate(`${ROUTES.CREATE_QUIZ}/${newStep}`);
     }
   };
 
@@ -73,7 +74,7 @@ export default function CreateQuiz() {
               colorScheme="green"
               size="lg"
               minW={36}
-              onClick={handleClickBack}
+              onClick={() => handleNavigate(Directions.BACK)}
             >
               Back
             </Button>
@@ -84,7 +85,7 @@ export default function CreateQuiz() {
               colorScheme="green"
               size="lg"
               minW={36}
-              onClick={handleClickNext}
+              onClick={() => handleNavigate(Directions.NEXT)}
             >
               Next
             </Button>
