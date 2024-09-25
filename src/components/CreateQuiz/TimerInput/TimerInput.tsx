@@ -1,13 +1,13 @@
-import { Box, Input, Text } from '@chakra-ui/react';
+import { Box, Input, Text, useToast } from '@chakra-ui/react';
 import { ChangeEvent } from 'react';
-import {
-  DEFAULT_TIMER_VALUE,
-  useCreateQuizFormStore,
-} from 'hooks/useCreateQuizFormStore';
+import { useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 import { secondsToTimeString } from 'utils/secondsToTimeString';
 import { timeStringToSeconds } from 'utils/timeStringToSeconds';
+import { ONE_HOUR_IN_SECONDS } from 'constants/constants';
 
 export default function TimerInput() {
+  const toast = useToast();
+
   const timerValue = useCreateQuizFormStore(state => state.timer);
   const setFormElementValue = useCreateQuizFormStore(
     state => state.setFormElementValue
@@ -16,11 +16,14 @@ export default function TimerInput() {
   const handleTimerChange = (event: ChangeEvent<HTMLInputElement>) => {
     const convertedToSecondsTime = timeStringToSeconds(event.target.value);
 
-    if (convertedToSecondsTime <= 3600) {
+    if (convertedToSecondsTime <= ONE_HOUR_IN_SECONDS) {
       setFormElementValue({ key: 'timer', value: convertedToSecondsTime });
     } else {
-      setFormElementValue({ key: 'timer', value: DEFAULT_TIMER_VALUE });
-      alert('Time exceeds the maximum allowed duration of 1 hour.');
+      toast({
+        status: 'error',
+        title: 'Oops!',
+        description: "You can't set the timer for more than an hour",
+      });
     }
   };
 

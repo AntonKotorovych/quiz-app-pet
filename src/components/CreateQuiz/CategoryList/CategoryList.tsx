@@ -4,25 +4,20 @@ import {
   DEFAULT_CATEGORY_ID,
 } from 'constants/config/createQuizStepsConfig';
 import { useFetchCategoriesQuery } from 'hooks/useFetchCategoriesQuery';
+import { FormPayload, useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 import ListItem from '../ListItem';
-
-const ANY_CATEGORY_ITEM = (
-  <ListItem
-    keyType="category"
-    id={DEFAULT_CATEGORY_ID}
-    name="Any Category"
-    icon={CREATE_QUIZ_STEPS_CONFIG.CATEGORIES[DEFAULT_CATEGORY_ID].icon}
-    backgroundColor={
-      CREATE_QUIZ_STEPS_CONFIG.CATEGORIES[DEFAULT_CATEGORY_ID].backgroundColor
-    }
-  />
-);
 
 export default function CategoryList() {
   const { data, isSuccess, isLoading } = useFetchCategoriesQuery();
 
+  const setFormElementValue = useCreateQuizFormStore(state => state.setFormElementValue);
+
+  const handleCategoryClick = (payload: FormPayload) => { 
+    setFormElementValue({ key: payload.key, value: payload.value });
+  };
+
   return (
-    <Box overflowY="scroll" height="350px" width="full">
+    <Box overflowY="scroll" height="500px" width="full">
       <List
         display="grid"
         gridTemplateColumns="repeat(4, 1fr)"
@@ -33,7 +28,16 @@ export default function CategoryList() {
         {isLoading && <Spinner size="xl" />}
         {isSuccess && (
           <>
-            {ANY_CATEGORY_ITEM}
+            <ListItem
+              keyType="category"
+              id={DEFAULT_CATEGORY_ID}
+              name="Any Category"
+              icon={CREATE_QUIZ_STEPS_CONFIG.CATEGORIES[DEFAULT_CATEGORY_ID].icon}
+              backgroundColor={
+               CREATE_QUIZ_STEPS_CONFIG.CATEGORIES[DEFAULT_CATEGORY_ID].backgroundColor
+              }
+              onClick={() => setFormElementValue({ key: 'category', value: DEFAULT_CATEGORY_ID })}
+          />
             {data?.map(category => {
               const existingCategory = CREATE_QUIZ_STEPS_CONFIG.CATEGORIES[category.id];
 
@@ -51,10 +55,11 @@ export default function CategoryList() {
                     existingCategory.backgroundColor ||
                     CREATE_QUIZ_STEPS_CONFIG.CATEGORIES[DEFAULT_CATEGORY_ID].backgroundColor
                   }
+                  onClick={handleCategoryClick}
                 />
               );
             })}
-          </>
+            </>
         )}
       </List>
     </Box>

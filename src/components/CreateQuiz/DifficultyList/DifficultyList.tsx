@@ -1,8 +1,17 @@
 import { Box, List } from '@chakra-ui/react';
 import { CREATE_QUIZ_STEPS_CONFIG } from 'constants/config/createQuizStepsConfig';
+import { FormPayload, useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 import ListItem from '../ListItem';
 
 export default function DifficultyList() {
+  const setFormElementValue = useCreateQuizFormStore(
+    state => state.setFormElementValue
+  );
+
+  const handleDifficultyClick = (payload: FormPayload) => {
+    setFormElementValue({ key: payload.key, value: payload.value });
+  };
+
   return (
     <Box width="full">
       <List
@@ -18,6 +27,7 @@ export default function DifficultyList() {
             key={difficultyLevel.id}
             icon={difficultyLevel.icon}
             backgroundColor={difficultyLevel.backgroundColor}
+            onClick={handleDifficultyClick}
           />
         ))}
       </List>

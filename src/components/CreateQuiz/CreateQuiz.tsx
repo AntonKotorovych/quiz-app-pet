@@ -1,5 +1,5 @@
 import { Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { FIRST_STEP, LAST_STEP, STEP_CONFIG } from 'constants/config/stepConfig';
 import QuizButton from 'components/QuizButton';
@@ -12,8 +12,11 @@ enum StepDirections {
   BACK = 'back',
 }
 
-export default function CreateQuiz() {
-  const { step } = useParams();
+interface Props {
+  step: string;
+}
+
+export default function CreateQuiz({ step }: Props) {
   const navigate = useNavigate();
 
   const clearFormData = useCreateQuizFormStore(state => state.clearFormData);
@@ -47,7 +50,7 @@ export default function CreateQuiz() {
 
   return (
     <CreateQuizContainer as="section">
-      <Flex p={10} flexDirection="column" h="full">
+      <Flex p={10} flexDirection="column" h="full" w="full">
         <Flex flexDirection="column" flex={1} justifyContent="space-between">
           <Text fontSize="xl">Step: {step}</Text>
           <Heading size="lg" alignSelf="center">
@@ -60,7 +63,7 @@ export default function CreateQuiz() {
           flex={6}
           justifyContent="center"
         >
-          {<QuizStep />}
+          <QuizStep />
         </Flex>
         <HStack
           borderTop="2px"

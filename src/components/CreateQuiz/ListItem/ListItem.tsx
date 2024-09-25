@@ -6,7 +6,11 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { ElementId } from 'constants/config/createQuizStepsConfig';
-import { QuizFormKeys, useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
+import {
+  FormPayload,
+  QuizFormKeys,
+  useCreateQuizFormStore,
+} from 'hooks/useCreateQuizFormStore';
 
 interface Props {
   id: ElementId;
@@ -14,6 +18,7 @@ interface Props {
   icon: string;
   backgroundColor: { left: string; right: string };
   keyType: QuizFormKeys;
+  onClick: ({ key, value }: FormPayload) => void;
 }
 
 export default function ListItem({
@@ -22,21 +27,15 @@ export default function ListItem({
   icon,
   backgroundColor,
   keyType,
+  onClick,
 }: Props) {
-  const setFormElementValue = useCreateQuizFormStore(
-    state => state.setFormElementValue
-  );
   const currentElement = useCreateQuizFormStore(state => state[keyType]);
-
-  const handleElementClick = () => {
-    setFormElementValue({ key: keyType, value: id });
-  };
 
   const isSelected = currentElement === id;
 
   return (
     <ChakraListItem
-      w={44}
+      minW={44}
       transition="transform 0.2s ease-in-out"
       _hover={{ transform: 'scale(1.1)' }}
       cursor="pointer"
@@ -44,25 +43,25 @@ export default function ListItem({
       borderRadius="xl"
       border="2px"
       transform={isSelected ? 'scale(1.1)' : ''}
-      borderColor={isSelected ? 'yellow.400' : 'gray.600'}
+      borderColor={isSelected ? 'yellow.600' : 'gray.600'}
       boxShadow={isSelected ? 'lg' : ''}
       overflow="hidden"
-      outline={isSelected ? '4px solid' : ''}
-      outlineColor={isSelected ? 'orange.300' : ''}
-      onClick={handleElementClick}
+      onClick={() => onClick({ key: keyType, value: id })}
     >
-      <Card
-        direction="row"
-        minH={20}
-        background={`linear-gradient(to right, ${backgroundColor.left}, ${backgroundColor.right})`}
-      >
-        <Box display="flex" justifyContent="center" p={2} gap={2}>
-          <Image src={icon} width={10} height={10} />
-          <Text fontSize="sm" fontWeight="bold">
-            {name}
-          </Text>
-        </Box>
-      </Card>
+      <Box as="button" w="full" textAlign="left">
+        <Card
+          direction="row"
+          minH={20}
+          background={`linear-gradient(to right, ${backgroundColor.left}, ${backgroundColor.right})`}
+        >
+          <Box display="flex" justifyContent="center" p={2} gap={2}>
+            <Image src={icon} width={10} height={10} />
+            <Text fontSize="sm" fontWeight="bold">
+              {name}
+            </Text>
+          </Box>
+        </Card>
+      </Box>
     </ChakraListItem>
   );
 }

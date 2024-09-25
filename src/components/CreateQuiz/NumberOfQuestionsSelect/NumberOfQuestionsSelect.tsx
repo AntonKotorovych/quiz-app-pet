@@ -1,4 +1,4 @@
-import { Select } from '@chakra-ui/react';
+import { Box, Select } from '@chakra-ui/react';
 import { ChangeEvent } from 'react';
 import { MAX_QUESTION_QUANTITY } from 'constants/constants';
 import { useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
@@ -21,18 +21,19 @@ export default function NumberOfQuestionsSelect() {
   };
 
   return (
-    <Select
-      placeholder="Select number of questions..."
-      width="50%"
-      size="lg"
-      onChange={handleChange}
-      value={numbersOfQuestionValue}
-    >
-      {QUESTION_QUANTITY_OPTIONS.map(option => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </Select>
+    <Box width="50%">
+      <Select
+        placeholder="Select number of questions..."
+        size="lg"
+        onChange={handleChange}
+        value={numbersOfQuestionValue}
+      >
+        {QUESTION_QUANTITY_OPTIONS.map(option => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </Select>
+    </Box>
   );
 }

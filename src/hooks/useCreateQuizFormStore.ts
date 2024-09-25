@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import { DEFAULT_CATEGORY_ID } from 'constants/config/createQuizStepsConfig';
 
 export const DEFAULT_TIMER_VALUE = 30;
@@ -21,17 +21,10 @@ interface FormActions {
   setFormElementValue: (payload: FormPayload) => void;
 }
 
-interface FormPayload {
+export interface FormPayload {
   key: QuizFormKeys;
   value: string | number;
 }
-
-// interface StepState {
-//   currentStep: number;
-//   incrementCurrentStep: VoidFunction;
-//   decrementCurrentStep: VoidFunction;
-//   setStep: (step: number) => void;
-// }
 
 type FormStore = FormState & FormActions;
 
@@ -45,16 +38,15 @@ export const useCreateQuizFormStore = create<FormStore>()(
           ...state,
           [key]: DEFAULT_STATE_VALUES[key],
         })),
-      setFormElementValue: payload => {
+      setFormElementValue: ({ key, value }) => {
         set(state => ({
           ...state,
-          [payload.key]: payload.value,
+          [key]: value,
         }));
       },
     }),
     {
       name: 'create-quiz-form-storage',
-      storage: createJSONStorage(() => localStorage),
     }
   )
 );
