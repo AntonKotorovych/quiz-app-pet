@@ -1,5 +1,3 @@
-import { theme } from 'styles/theme';
-
 type DifficultyLevelId = 'easy' | 'medium' | 'hard';
 type QuizTypeId = 'anyType' | 'multiple' | 'boolean';
 
@@ -37,183 +35,181 @@ export const DEFAULT_CATEGORY_ID = -1;
 
 const createIconPath = (path: string) => `../../../assets/icons/${path}.svg`;
 
-const { colors } = theme;
-
 export const CREATE_QUIZ_STEPS_CONFIG = {
   CATEGORIES: {
     [DEFAULT_CATEGORY_ID]: {
       icon: createIconPath('categories/any-category'),
       backgroundColor: {
-        left: colors.gray[50],
-        right: colors.blue[300],
+        left: 'gray.50',
+        right: 'blue.300',
       },
     },
     9: {
       icon: createIconPath('categories/general-knowledge'),
       backgroundColor: {
-        left: colors.teal[300],
-        right: colors.blue[300],
+        left: 'teal.300',
+        right: 'blue.300',
       },
     },
     10: {
       icon: createIconPath('categories/entertainment-books'),
       backgroundColor: {
-        left: colors.pink[400],
-        right: colors.white,
+        left: 'pink.400',
+        right: 'white',
       },
     },
     11: {
       icon: createIconPath('categories/entertainment-film'),
       backgroundColor: {
-        left: colors.yellow[400],
-        right: colors.yellow[100],
+        left: 'yellow.400',
+        right: 'yellow.100',
       },
     },
     12: {
       icon: createIconPath('categories/entertainment-music'),
       backgroundColor: {
-        left: colors.blue[300],
-        right: colors.green[200],
+        left: 'blue.300',
+        right: 'green.200',
       },
     },
     13: {
       icon: createIconPath('categories/entertainment-musicals&theatres'),
       backgroundColor: {
-        left: colors.blue[200],
-        right: colors.orange[200],
+        left: 'blue.200',
+        right: 'orange.200',
       },
     },
     14: {
       icon: createIconPath('categories/entertainment-television'),
       backgroundColor: {
-        left: colors.red[100],
-        right: colors.green[200],
+        left: 'red.100',
+        right: 'green.200',
       },
     },
     15: {
       icon: createIconPath('categories/entertainment-video-games'),
       backgroundColor: {
-        left: colors.purple[200],
-        right: colors.cyan[200],
+        left: 'purple.200',
+        right: 'cyan.200',
       },
     },
     16: {
       icon: createIconPath('categories/entertainment-board-games'),
       backgroundColor: {
-        left: colors.gray[500],
-        right: colors.yellow[100],
+        left: 'gray.500',
+        right: 'yellow.100',
       },
     },
     17: {
       icon: createIconPath('categories/science-and-nature'),
       backgroundColor: {
-        left: colors.blue[300],
-        right: colors.purple[200],
+        left: 'blue.300',
+        right: 'purple.200',
       },
     },
     18: {
       icon: createIconPath('categories/science-computers'),
       backgroundColor: {
-        left: colors.yellow[100],
-        right: colors.red[100],
+        left: 'yellow.100',
+        right: 'red.100',
       },
     },
     19: {
       icon: createIconPath('categories/science-mathematics'),
       backgroundColor: {
-        left: colors.blue[200],
-        right: colors.pink[200],
+        left: 'blue.200',
+        right: 'pink.200',
       },
     },
     20: {
       icon: createIconPath('categories/mythology'),
       backgroundColor: {
-        left: colors.purple[300],
-        right: colors.pink[100],
+        left: 'purple.300',
+        right: 'pink.100',
       },
     },
     21: {
       icon: createIconPath('categories/sports'),
       backgroundColor: {
-        left: colors.purple[200],
-        right: colors.cyan[200],
+        left: 'purple.200',
+        right: 'cyan.200',
       },
     },
     22: {
       icon: createIconPath('categories/geography'),
       backgroundColor: {
-        left: colors.pink[100],
-        right: colors.blue[400],
+        left: 'pink.100',
+        right: 'blue.400',
       },
     },
     23: {
       icon: createIconPath('categories/history'),
       backgroundColor: {
-        left: colors.pink[50],
-        right: colors.green[200],
+        left: 'pink.50',
+        right: 'green.200',
       },
     },
     24: {
       icon: createIconPath('categories/politics'),
       backgroundColor: {
-        left: colors.blue[200],
-        right: colors.blue[600],
+        left: 'blue.200',
+        right: 'blue.600',
       },
     },
     25: {
       icon: createIconPath('categories/art'),
       backgroundColor: {
-        left: colors.pink[400],
-        right: colors.cyan[200],
+        left: 'pink.400',
+        right: 'cyan.200',
       },
     },
     26: {
       icon: createIconPath('categories/celebrities'),
       backgroundColor: {
-        left: colors.green[400],
-        right: colors.yellow[200],
+        left: 'green.400',
+        right: 'yellow.200',
       },
     },
     27: {
       icon: createIconPath('categories/animals'),
       backgroundColor: {
-        left: colors.white,
-        right: colors.yellow[400],
+        left: 'white',
+        right: 'yellow.400',
       },
     },
     28: {
       icon: createIconPath('categories/vehicles'),
       backgroundColor: {
-        left: colors.gray[100],
-        right: colors.red[300],
+        left: 'gray.100',
+        right: 'red.300',
       },
     },
     29: {
       icon: createIconPath('categories/entertainment-comics'),
       backgroundColor: {
-        left: colors.gray[600],
-        right: colors.red[300],
+        left: 'gray.600',
+        right: 'red.300',
       },
     },
     30: {
       icon: createIconPath('categories/science-gadgets'),
       backgroundColor: {
-        left: colors.gray[50],
-        right: colors.green[200],
+        left: 'gray.50',
+        right: 'green.200',
       },
     },
     31: {
       icon: createIconPath('categories/entertainment-japanese-anime-and-manga'),
       backgroundColor: {
-        left: colors.yellow[200],
-        right: colors.green[300],
+        left: 'yellow.200',
+        right: 'green.300',
       },
     },
     32: {
       icon: createIconPath('categories/entertainment-cartoon-and-animations'),
       backgroundColor: {
-        left: colors.white,
-        right: colors.green[300],
+        left: 'white',
+        right: 'green.300',
       },
     },
   } as CategoryConfig,
@@ -224,8 +220,8 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       name: 'Easy',
       icon: createIconPath('difficulty-levels/easy-level'),
       backgroundColor: {
-        left: '#cdf3ff',
-        right: '#43b7ff',
+        left: 'blue.100',
+        right: 'blue.400',
       },
     },
     {
@@ -233,8 +229,8 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       name: 'Medium',
       icon: createIconPath('difficulty-levels/medium-level'),
       backgroundColor: {
-        left: '#a2fd62',
-        right: '#f3ff4c',
+        left: 'green.200',
+        right: 'yellow.300',
       },
     },
     {
@@ -242,8 +238,8 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       name: 'Hard',
       icon: createIconPath('difficulty-levels/hard-level'),
       backgroundColor: {
-        left: '#ffc2c2',
-        right: '#f84141',
+        left: 'red.200',
+        right: 'red.500',
       },
     },
   ] as DifficultyLevel[],
@@ -253,8 +249,8 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       name: 'Any type',
       icon: createIconPath('quiz-types/any-type'),
       backgroundColor: {
-        left: '#5ffaff',
-        right: '#c7e3ff',
+        left: 'cyan.300',
+        right: 'cyan.200',
       },
     },
     {
@@ -262,8 +258,8 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       name: 'Multiple choices',
       icon: createIconPath('quiz-types/multiple-choices'),
       backgroundColor: {
-        left: '#fff75c',
-        right: '#7bfc51',
+        left: 'yellow.200',
+        right: 'green.200',
       },
     },
     {
@@ -271,8 +267,8 @@ export const CREATE_QUIZ_STEPS_CONFIG = {
       name: 'True/False',
       icon: createIconPath('quiz-types/true-false'),
       backgroundColor: {
-        left: '#ffffff',
-        right: '#a7a7a7',
+        left: 'white',
+        right: 'gray.500',
       },
     },
   ] as QuizType[],

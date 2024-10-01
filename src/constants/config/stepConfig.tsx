@@ -9,7 +9,7 @@ export const STEP_CONFIG: {
   [key: string]: {
     name: QuizFormKeys;
     title: string;
-    component: () => JSX.Element;
+    component: React.FC;
   };
 } = {
   '1': {

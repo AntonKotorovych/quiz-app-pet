@@ -1,10 +1,11 @@
 import { Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { FIRST_STEP, LAST_STEP, STEP_CONFIG } from 'constants/config/stepConfig';
 import QuizButton from 'components/QuizButton';
 import { ROUTES } from 'constants/routes';
 import { useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
+import { getIsValidStep } from 'utils/getIsValidStep';
 import { CreateQuizContainer } from './styles';
 
 enum StepDirections {
@@ -12,25 +13,25 @@ enum StepDirections {
   BACK = 'back',
 }
 
-interface Props {
-  step: string;
-}
-
-export default function CreateQuiz({ step }: Props) {
+export default function CreateQuiz() {
   const navigate = useNavigate();
+  const { step } = useParams();
 
   const clearFormData = useCreateQuizFormStore(state => state.clearFormData);
   const clearField = useCreateQuizFormStore(state => state.clearField);
 
-  const isValidStep = !!step && Object.keys(STEP_CONFIG).includes(step);
+  const isValidStep = getIsValidStep(step);
 
   const handleClear = () => {
     if (step) clearField(STEP_CONFIG[step].name);
   };
 
   const handleNavigate = (direction: StepDirections) => {
-    if (isValidStep) {
-      const newStep = direction === StepDirections.NEXT ? +step + 1 : +step - 1;
+    if (isValidStep && step) {
+      const convertedStep = +step;
+
+      const newStep =
+        direction === StepDirections.NEXT ? convertedStep + 1 : convertedStep - 1;
 
       navigate(`${ROUTES.CREATE_QUIZ}/${newStep}`);
     }
@@ -42,7 +43,7 @@ export default function CreateQuiz({ step }: Props) {
     };
   }, [clearFormData]);
 
-  if (!isValidStep) {
+  if (!isValidStep || !step) {
     return null;
   }
 

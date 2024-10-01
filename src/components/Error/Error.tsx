@@ -1,4 +1,5 @@
-import { Flex, Heading, Text } from '@chakra-ui/react';
+import { Heading, Text } from '@chakra-ui/react';
+import { ErrorContainer } from './styles';
 
 interface Props {
   title: string;
@@ -7,19 +8,9 @@ interface Props {
 
 export default function Error({ title, message }: Props) {
   return (
-    <Flex
-      minW="300px"
-      minH="100px"
-      background="gray.600"
-      border="2px"
-      borderRadius="2xl"
-      mt={2}
-      flexDir="column"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <ErrorContainer>
       <Heading color="red.500">{title}</Heading>
       <Text color="red.500">{message}</Text>
-    </Flex>
+    </ErrorContainer>
   );
 }
