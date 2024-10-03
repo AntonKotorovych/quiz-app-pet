@@ -1,4 +1,4 @@
-import { Box, List, Spinner } from '@chakra-ui/react';
+import { Box, Flex, List, Spinner } from '@chakra-ui/react';
 import { useFetchCategoriesQuery } from 'hooks/useFetchCategoriesQuery';
 import { FormPayload, useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 import { mapCategoryFields } from 'utils/mapCategoryFields';
@@ -16,33 +16,35 @@ export default function CategoryList() {
   };
 
   return (
-    <Box overflowY="scroll" height="500px" width="full">
-      <List
-        display="grid"
-        gridTemplateColumns="repeat(4, 1fr)"
-        gap={4}
-        overflow="hidden"
-        p={6}
-      >
-        {isLoading && <Spinner size="xl" />}
-        {isSuccess && (
-          <>
-            {data?.map(category => {
-              return (
-                <ListItem
-                  keyType="category"
-                  id={category.id}
-                  name={category.name}
-                  key={category.id}
-                  icon={category.icon}
-                  backgroundColor={category.backgroundColor}
-                  onClick={handleCategoryClick}
-                />
-              );
-            })}
-          </>
-        )}
-      </List>
+    <Box overflowY={isLoading ? undefined : 'scroll'} height="520px" width="full">
+      {isLoading && (
+        <Flex height="full" width="full" justifyContent="center" alignItems="center">
+          <Spinner size="xl" />
+        </Flex>
+      )}
+      {isSuccess && (
+        <List
+          display="grid"
+          gridTemplateColumns="repeat(4, 1fr)"
+          gap={4}
+          overflow="hidden"
+          p={6}
+        >
+          {data?.map(category => {
+            return (
+              <ListItem
+                keyType="category"
+                id={category.id}
+                name={category.name}
+                key={category.id}
+                icon={category.icon}
+                backgroundColor={category.backgroundColor}
+                onClick={handleCategoryClick}
+              />
+            );
+          })}
+        </List>
+      )}
     </Box>
   );
 }
