@@ -6,13 +6,20 @@ interface BackgroundColor {
   right: string;
 }
 
-interface Category {
+export interface CategoryResponseItem {
+  id: number;
+  name: string;
+}
+
+interface CategoryMetadataItem {
   icon: string;
   backgroundColor: BackgroundColor;
 }
 
+export type MappedCategory = CategoryResponseItem & CategoryMetadataItem;
+
 interface CategoryConfig {
-  [key: number]: Category;
+  [key: number]: CategoryMetadataItem;
 }
 
 interface DifficultyLevel {

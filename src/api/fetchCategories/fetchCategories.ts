@@ -1,12 +1,8 @@
 import { API_ROUTER } from 'constants/apiRoutes';
+import { CategoryResponseItem } from 'constants/config/createQuizStepsConfig';
 import instance from 'libs/axios';
 
-interface CategoryMappingItem {
-  id: number;
-  name: string;
-}
-
-export default async function fetchCategories(): Promise<CategoryMappingItem[]> {
+export default async function fetchCategories(): Promise<CategoryResponseItem[]> {
   try {
     const { data } = await instance.get(API_ROUTER.CATEGORIES);
     return data.triviaCategories;
