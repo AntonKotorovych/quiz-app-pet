@@ -30,7 +30,9 @@ export default function ListItem({
     backgroundColor.right
   );
 
-  const handleOnClick = () => onClick({ key: keyType, value: id });
+  const handleOnClick = () => {
+    if (onClick) onClick({ key: keyType, value: id });
+  };
 
   return (
     <ChakraListItem

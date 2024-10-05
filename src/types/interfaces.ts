@@ -7,6 +7,6 @@ export interface CreateQuizListItem {
   icon: string;
   backgroundColor: { left: string; right: string };
   keyType: QuizFormKeys;
-  isSelected: boolean;
-  onClick: ({ key, value }: FormPayload) => void;
+  isSelected?: boolean;
+  onClick?: ({ key, value }: FormPayload) => void;
 }
