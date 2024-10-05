@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { DEFAULT_CATEGORY_ID } from 'constants/config/createQuizStepsConfig';
+import { DEFAULT_CATEGORY_ID, ElementId } from 'constants/config/createQuizStepsConfig';
 
 export const DEFAULT_TIMER_VALUE = 30;
 
@@ -19,6 +19,7 @@ interface FormActions {
   clearFormData: VoidFunction;
   clearField: (key: QuizFormKeys) => void;
   setFormElementValue: (payload: FormPayload) => void;
+  isSelected: (key: QuizFormKeys, id: ElementId) => boolean;
 }
 
 export interface FormPayload {
@@ -30,7 +31,7 @@ type FormStore = FormState & FormActions;
 
 export const useCreateQuizFormStore = create<FormStore>()(
   persist(
-    set => ({
+    (set, get) => ({
       ...DEFAULT_STATE_VALUES,
       clearFormData: () => set(DEFAULT_STATE_VALUES),
       clearField: (key: QuizFormKeys) =>
@@ -43,6 +44,11 @@ export const useCreateQuizFormStore = create<FormStore>()(
           ...state,
           [key]: value,
         }));
+      },
+      isSelected: (key, id) => {
+        const currentItem = get()[key];
+
+        return currentItem === id;
       },
     }),
     {

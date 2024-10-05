@@ -7,21 +7,7 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 import { get } from '@chakra-ui/utils';
-import { ElementId } from 'constants/config/createQuizStepsConfig';
-import {
-  FormPayload,
-  QuizFormKeys,
-  useCreateQuizFormStore,
-} from 'hooks/useCreateQuizFormStore';
-
-interface Props {
-  id: ElementId;
-  name: string;
-  icon: string;
-  backgroundColor: { left: string; right: string };
-  keyType: QuizFormKeys;
-  onClick: ({ key, value }: FormPayload) => void;
-}
+import { CreateQuizListItem } from 'types/interfaces';
 
 export default function ListItem({
   id,
@@ -29,10 +15,9 @@ export default function ListItem({
   icon,
   backgroundColor,
   keyType,
+  isSelected,
   onClick,
-}: Props) {
-  const currentElement = useCreateQuizFormStore(state => state[keyType]);
-
+}: CreateQuizListItem) {
   const theme = useTheme();
   const leftBackgroundColor = get(
     theme.colors,
@@ -46,8 +31,6 @@ export default function ListItem({
   );
 
   const handleOnClick = () => onClick({ key: keyType, value: id });
-
-  const isSelected = currentElement === id;
 
   return (
     <ChakraListItem
