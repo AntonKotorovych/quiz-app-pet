@@ -9,8 +9,10 @@ interface Props {
 export default function Error({ title, message }: Props) {
   return (
     <ErrorContainer>
-      <Heading color="red.500">{title}</Heading>
-      <Text color="red.500">{message}</Text>
+      <Heading color="red" size="2xl">
+        {title}
+      </Heading>
+      <Text color="red">{message}</Text>
     </ErrorContainer>
   );
 }
