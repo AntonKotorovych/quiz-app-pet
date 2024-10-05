@@ -39,7 +39,7 @@ export const STEP_CONFIG: {
   },
 };
 
-const STEP_KEYS = Object.keys(STEP_CONFIG);
+export const STEP_KEYS = Object.keys(STEP_CONFIG);
 
 export const FIRST_STEP = STEP_KEYS[0];
 export const LAST_STEP = STEP_KEYS[STEP_KEYS.length - 1];

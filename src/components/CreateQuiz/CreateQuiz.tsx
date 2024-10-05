@@ -1,4 +1,4 @@
-import { Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
+import { Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { FIRST_STEP, LAST_STEP, STEP_CONFIG } from 'constants/config/stepConfig';
@@ -6,6 +6,7 @@ import QuizButton from 'components/QuizButton';
 import { ROUTES } from 'constants/routes';
 import { useCreateQuizFormStore } from 'hooks/useCreateQuizFormStore';
 import { getIsValidStep } from 'utils/getIsValidStep';
+import Stepper from 'components/Stepper';
 import { CreateQuizContainer } from './styles';
 
 enum StepDirections {
@@ -53,17 +54,12 @@ export default function CreateQuiz() {
     <CreateQuizContainer as="section">
       <Flex p={10} flexDirection="column" h="full" w="full">
         <Flex flexDirection="column" flex={1} justifyContent="space-between">
-          <Text fontSize="xl">Step: {step}</Text>
+          <Stepper />
           <Heading size="lg" alignSelf="center">
             {STEP_CONFIG[step]?.title}
           </Heading>
         </Flex>
-        <Flex
-          alignItems="center"
-          flexDirection="column"
-          flex={6}
-          justifyContent="center"
-        >
+        <Flex alignItems="center" flexDirection="column" flex={6} justifyContent="center">
           <QuizStep />
         </Flex>
         <HStack
