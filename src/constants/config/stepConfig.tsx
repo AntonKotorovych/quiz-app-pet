@@ -5,12 +5,14 @@ import QuizTypeList from 'components/CreateQuiz/QuizTypeList';
 import TimerInput from 'components/CreateQuiz/TimerInput';
 import { QuizFormKeys } from 'hooks/useCreateQuizFormStore';
 
+interface Props {
+  name: QuizFormKeys;
+  title: string;
+  component: React.FC;
+}
+
 export const STEP_CONFIG: {
-  [key: string]: {
-    name: QuizFormKeys;
-    title: string;
-    component: React.FC;
-  };
+  [key: string]: Props;
 } = {
   '1': {
     name: 'numberOfQuestions',

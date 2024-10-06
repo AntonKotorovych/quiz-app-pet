@@ -1,7 +1,7 @@
 import { ElementId } from 'constants/config/createQuizStepsConfig';
 import { FormPayload, QuizFormKeys } from 'hooks/useCreateQuizFormStore';
 
-export interface CreateQuizListItem {
+export interface ListItemProps {
   id: ElementId;
   name: string;
   icon: string;

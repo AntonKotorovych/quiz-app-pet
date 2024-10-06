@@ -1,11 +1,11 @@
 import { Box, Flex, List, Spinner } from '@chakra-ui/react';
 import { useFetchCategoriesQuery } from 'hooks/useFetchCategoriesQuery';
 import { mapCategoryFields } from 'utils/mapCategoryFields';
-import WithQuizStoreFunctionality from 'components/WithQuizStoreFunctionality';
+import CreateQuizListItem from 'components/CreateQuizListItem';
 
 export default function CategoryList() {
   const { data, isSuccess, isLoading } = useFetchCategoriesQuery({
-    select: response => mapCategoryFields(response),
+    select: mapCategoryFields,
   });
 
   return (
@@ -25,14 +25,7 @@ export default function CategoryList() {
         >
           {data?.map(category => {
             return (
-              <WithQuizStoreFunctionality
-                keyType="category"
-                id={category.id}
-                name={category.name}
-                key={category.id}
-                icon={category.icon}
-                backgroundColor={category.backgroundColor}
-              />
+              <CreateQuizListItem keyType="category" key={category.id} {...category} />
             );
           })}
         </List>
